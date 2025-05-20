@@ -1,21 +1,18 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager Instance { get; private set; }
+	public enum GameState { MainMenu, Playing, Paused, GameOver }
+	public GameState CurrentState { get; private set; }
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this) Destroy(gameObject);
-        else
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
+	public void SetState(GameState newState)
+	{
+		CurrentState = newState;
+		Debug.Log("Game State Changed to: " + newState);
+	}
 
-    public void InitializeGame()
-    {
-        // We'll spawn tanks here later
-    }
+	private void Start()
+	{
+		SetState(GameState.Playing); // or load menu scene
+	}
 }
