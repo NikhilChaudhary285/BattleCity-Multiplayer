@@ -1,4 +1,3 @@
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -6,24 +5,28 @@ public class Bullet : MonoBehaviour
 	public float speed = 10f;
 	public float lifetime = 2f;
 	private float timer;
+	private Rigidbody2D rb;
 	[TagField]
 	[SerializeField] private string neglectCollisionTag;
-
-	void OnEnable()
+	private void Awake()
 	{
+		rb = GetComponent<Rigidbody2D>();
+	}
+
+	public void Fire(Vector2 direction)
+	{
+		rb.velocity = direction.normalized * speed;
 		timer = 0f;
 	}
 
-	void Update()
+	private void Update()
 	{
-		transform.Translate(Vector2.up * speed * Time.deltaTime);
 		timer += Time.deltaTime;
-
 		if (timer >= lifetime)
 			BulletFactory.Instance.ReturnBullet(gameObject);
 	}
 
-	void OnTriggerEnter2D(Collider2D collision)
+	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		// damage logic here
 		if (!collision.CompareTag(neglectCollisionTag))

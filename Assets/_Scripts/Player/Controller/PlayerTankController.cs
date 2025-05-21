@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerTankController : MonoBehaviour
 {
@@ -45,7 +44,7 @@ public class PlayerTankController : MonoBehaviour
 	void Update()
 	{
 		float rotationInput = -moveInput.x;
-		view.Move(moveInput.normalized);
+		view.Move(GetCardinalDirection(moveInput));
 		view.Rotate(rotationInput);
 
 		if (firePressed)
@@ -54,4 +53,20 @@ public class PlayerTankController : MonoBehaviour
 			firePressed = false;
 		}
 	}
+
+	private Vector2 GetCardinalDirection(Vector2 input)
+	{
+		if (input == Vector2.zero) return Vector2.zero;
+
+		// Prefer vertical over horizontal if both pressed
+		if (Mathf.Abs(input.y) >= Mathf.Abs(input.x))
+		{
+			return new Vector2(0, Mathf.Sign(input.y));
+		}
+		else
+		{
+			return new Vector2(Mathf.Sign(input.x), 0);
+		}
+	}
+
 }

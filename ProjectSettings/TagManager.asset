@@ -50,3 +50,9 @@ TagManager:
   - name: Bullet
     uniqueID: 2074657045
     locked: 0
+  - name: TankLowerPart
+    uniqueID: 1309081277
+    locked: 0
+  - name: TankUpperPart
+    uniqueID: 2857001087
+    locked: 0
