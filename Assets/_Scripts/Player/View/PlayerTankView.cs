@@ -21,9 +21,22 @@ public class PlayerTankView : MonoBehaviour
 
 	public void Shoot()
 	{
-		if (!controller.Model.CanFire()) return;
+		#region ---- OF ----
+
+		/*if (!controller.Model.CanFire()) return;
 
 		GameObject bullet = BulletFactory.Instance.GetBullet(firePoint.position, firePoint.rotation);
-		controller.Model.RecordFireTime();
+		Debug.Log($"Fired Bullet: {bullet.gameObject.GetInstanceID()}");
+		controller.Model.RecordFireTime();*/
+		#endregion ---- OF ----
+
+		#region ---- NF ----
+
+		if (!controller.CanFire()) return;
+
+		GameObject bullet = BulletFactory.Instance.GetBullet(firePoint.position, firePoint.rotation);
+		Debug.Log($"Fired Bullet: {bullet.gameObject.GetInstanceID()}");
+		controller.RecordFireTime();
+		#endregion ---- NF ----
 	}
 }

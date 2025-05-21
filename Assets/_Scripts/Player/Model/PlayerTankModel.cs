@@ -10,6 +10,9 @@ public class PlayerTankModel : ScriptableObject
 	[HideInInspector]
 	public float lastFiredTime = -999f;
 
-	public bool CanFire() => Time.time >= lastFiredTime + fireCooldown;
-	public void RecordFireTime() => lastFiredTime = Time.time;
+	#region ---- OF ----
+
+	/*public bool CanFire() => Time.time >= lastFiredTime + fireCooldown;
+	public void RecordFireTime() => lastFiredTime = Time.time;*/
+	#endregion ---- OF ----
 }

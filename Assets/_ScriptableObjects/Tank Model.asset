@@ -15,4 +15,4 @@ MonoBehaviour:
   moveSpeed: 5
   rotationSpeed: 180
   fireCooldown: 0.5
-  lastFiredTime: -999
+  lastFiredTime: 45.84643
