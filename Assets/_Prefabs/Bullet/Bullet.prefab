@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5595147262183892010}
   - component: {fileID: 4989564261278475273}
   - component: {fileID: 4178898609212908573}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,4 +209,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   lifetime: 2
-  neglectCollisionTag: Player
+  neglectCollisionTag: 

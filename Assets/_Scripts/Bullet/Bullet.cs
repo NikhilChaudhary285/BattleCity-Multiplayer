@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		// damage logic here
-		if (!collision.CompareTag(neglectCollisionTag))
-			BulletFactory.Instance.ReturnBullet(gameObject);
+		//if (!collision.CompareTag(neglectCollisionTag))
+		BulletFactory.Instance.ReturnBullet(gameObject);
 	}
 }

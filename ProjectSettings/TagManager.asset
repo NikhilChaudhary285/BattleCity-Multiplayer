@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - EagleBase
   layers:
   - Default
   - TransparentFX
@@ -12,12 +13,12 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Wall
+  - Player
+  - Enemy
+  - Bullet
+  - EagleBase
   - 
   - 
   - 
@@ -41,18 +42,33 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Ground
+  - name: GroundTilemap
     uniqueID: 3677324907
+    locked: 0
+  - name: WallTilemap
+    uniqueID: 2091427039
+    locked: 0
+  - name: GrassTilemap
+    uniqueID: 852870785
+    locked: 0
+  - name: WaterTilemap
+    uniqueID: 4208482759
+    locked: 0
+  - name: OverlayTilemap
+    uniqueID: 1911597805
+    locked: 0
+  - name: SlipperyTilemap
+    uniqueID: 1538179163
+    locked: 0
+  - name: EagleBase
+    uniqueID: 2462670637
     locked: 0
   - name: Player
     uniqueID: 501835307
     locked: 0
-  - name: Bullet
-    uniqueID: 2074657045
-    locked: 0
-  - name: TankLowerPart
-    uniqueID: 1309081277
-    locked: 0
   - name: TankUpperPart
     uniqueID: 2857001087
+    locked: 0
+  - name: Bullet
+    uniqueID: 2074657045
     locked: 0
