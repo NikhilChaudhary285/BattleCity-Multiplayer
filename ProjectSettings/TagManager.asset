@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EagleBase
   - Water
+  - Enemy
   layers:
   - Default
   - TransparentFX

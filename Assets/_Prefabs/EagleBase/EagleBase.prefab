@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6469979906527597445}
   - component: {fileID: 4515073792685587951}
   - component: {fileID: 6741733094523248776}
+  - component: {fileID: 6642500960153467554}
   m_Layer: 12
   m_Name: EagleBase
   m_TagString: EagleBase
@@ -130,3 +131,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6642500960153467554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722987234371725196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb764c31bab2be4eabe7a31a237d6ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
