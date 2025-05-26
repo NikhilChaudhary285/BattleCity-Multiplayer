@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TileDestructible : MonoBehaviour
 {
-    public bool isDestructible = true;
+    public bool isDestructible;
 
     public void TakeDamage()
     {

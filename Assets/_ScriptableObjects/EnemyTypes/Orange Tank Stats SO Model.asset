@@ -15,3 +15,4 @@ MonoBehaviour:
   moveSpeed: 3
   maxHealth: 30
   fireRate: 0.5
+  bulletPrefab: {fileID: 8528446390528264748, guid: 68aa0196ffba8db4cb138502ba5b108e, type: 3}

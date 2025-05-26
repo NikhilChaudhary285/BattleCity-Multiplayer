@@ -8,8 +8,12 @@ public class Bullet : MonoBehaviour
     private float timer;
     private Rigidbody2D rb;
 
-    [TagField]
-    [SerializeField] private string neglectCollisionTag;
+    [SerializeField] private GameObject explosionPrefab;
+
+    [TagField][SerializeField] private string neglectCollisionTag; // Same-team tag (ignored)
+    [TagField][SerializeField] private string acceptCollisionTag;  // Opponent tag (destroyed/pool)
+
+    public bool isEnemyBullet;
 
     private void Awake()
     {
@@ -26,24 +30,57 @@ public class Bullet : MonoBehaviour
     {
         timer += Time.deltaTime;
         if (timer >= lifetime)
-            BulletFactory.Instance.ReturnBullet(gameObject);
+        {
+            BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Ignore collision with specified tag (like "Enemy")
+        // 1. Ignore hitting same team (enemy hits enemy or player hits player)
         if (collision.CompareTag(neglectCollisionTag))
-            return;
-
-        // If it hits the player, destroy the player GameObject
-        if (collision.CompareTag("Player"))
         {
-            Destroy(collision.gameObject);
-            BulletFactory.Instance.ReturnBullet(gameObject);
+            Debug.Log($"[IGNORED] Bullet hit same team: {neglectCollisionTag}");
             return;
         }
 
-        // If it hits a tilemap (like the destructible brick layer)
+        // 2. Bullet hits a valid target (enemy or player)
+        if (collision.CompareTag(acceptCollisionTag))
+        {
+            Debug.Log($"[HIT] Bullet hit: {acceptCollisionTag}");
+
+            if (isEnemyBullet)
+            {
+                // Enemy bullet hit player: destroy player
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                // Player bullet hit enemy: return enemy to pool
+                if (collision.TryGetComponent<EnemyTankController>(out var enemy))
+                {
+                    EnemyPool.Instance.ReturnEnemy(enemy);
+                }
+                else
+                {
+                    Debug.LogWarning("[ERROR] Hit an object tagged as Enemy but missing EnemyTankController.");
+                }
+            }
+
+            BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
+            return;
+        }
+
+        // 3. Bullet hits another bullet
+        if (collision.TryGetComponent<Bullet>(out Bullet otherBullet))
+        {
+            Debug.Log("[HIT] Bullet collided with another bullet. Destroying both.");
+            BulletFactory.Instance.ReturnBullet(otherBullet.gameObject, otherBullet.isEnemyBullet);
+            BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
+            return;
+        }
+
+        // 4. Tilemap destruction (unchanged)
         Tilemap tilemap = collision.GetComponent<Tilemap>();
         if (tilemap != null)
         {
@@ -53,13 +90,18 @@ public class Bullet : MonoBehaviour
 
             if (tile is DestructibleTile destructibleTile && destructibleTile.isDestructible)
             {
-                tilemap.SetTile(cell, null); // destroy the brick tile
-                BulletFactory.Instance.ReturnBullet(gameObject);
+                tilemap.SetTile(cell, null); // remove the tile                   
+
+                // Spawn explosion at tile's world position
+                Vector3 explosionPos = tilemap.GetCellCenterWorld(cell);
+                Instantiate(explosionPrefab, explosionPos, Quaternion.identity);
+
+                BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
                 return;
             }
         }
 
-        // If none of the above, return bullet to pool
-        BulletFactory.Instance.ReturnBullet(gameObject);
+        // 5. Default behavior
+        BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
     }
 }

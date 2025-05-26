@@ -7,6 +7,7 @@ TagManager:
   - EagleBase
   - Water
   - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -68,9 +69,15 @@ TagManager:
   - name: Player
     uniqueID: 501835307
     locked: 0
+  - name: Enemy
+    uniqueID: 180060407
+    locked: 0
   - name: TankUpperPart
     uniqueID: 2857001087
     locked: 0
   - name: Bullet
     uniqueID: 2074657045
+    locked: 0
+  - name: Explosion
+    uniqueID: 1312017983
     locked: 0
