@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerTankView : MonoBehaviour
 {
@@ -29,7 +29,7 @@ public class PlayerTankView : MonoBehaviour
 
     public void Rotate(float rotationInput)
     {
-        // No longer used with 90-degree snap rotation � left here for flexibility
+        // No longer used with 90-degree snap rotation — left here for flexibility
     }
 
     public void Shoot()
@@ -40,11 +40,15 @@ public class PlayerTankView : MonoBehaviour
         float angle = rb.rotation * Mathf.Deg2Rad;
         Vector2 shootDirection = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
 
-        // Spawn bullet with no rotation
-        GameObject bullet = BulletFactory.Instance.GetBullet(firePoint.position, Quaternion.identity, firePoint, false);
+        // Create rotation based on direction vector
+        Quaternion bulletRotation = Quaternion.LookRotation(Vector3.forward, shootDirection);
+
+        // Spawn bullet with correct rotation
+        GameObject bullet = BulletFactory.Instance.GetBullet(firePoint.position, bulletRotation, firePoint, false);
         bullet.GetComponent<Bullet>().Fire(shootDirection);
 
         controller.RecordFireTime();
     }
+
 }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyTankController : MonoBehaviour
 {
@@ -68,7 +69,11 @@ public class EnemyTankController : MonoBehaviour
         #region Don't Need this bullet type spawn inside this region logic without pooling bullet system until we want unique bullet prefab which have unique abilities except normal bullet
         //GameObject bullet = Instantiate(Stats.bulletPrefab, firePoint.position, Quaternion.identity, firePoint);
         #endregion
-        GameObject bullet = BulletFactory.Instance.GetBullet(enemyFirePoint.position, Quaternion.identity, enemyFirePoint, true);
+
+        // Create rotation based on direction vector
+        Quaternion bulletRotation = Quaternion.LookRotation(Vector3.forward, enemyShootDirection);
+
+        GameObject bullet = BulletFactory.Instance.GetBullet(enemyFirePoint.position, bulletRotation, enemyFirePoint, true);
 
         // Set bullet velocity using enemyShootDirection
         bullet.GetComponent<Bullet>().Fire(enemyShootDirection);

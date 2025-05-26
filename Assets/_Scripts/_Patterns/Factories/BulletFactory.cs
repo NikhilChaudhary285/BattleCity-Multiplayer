@@ -32,7 +32,6 @@ public class BulletFactory : MonoBehaviour
 
         bullet.transform.position = pos;
         bullet.transform.rotation = rot;
-        bullet.transform.localScale = new Vector3(2f, 1.5f, 0f);
         bullet.transform.SetParent(parent);
         bullet.SetActive(true);
 
