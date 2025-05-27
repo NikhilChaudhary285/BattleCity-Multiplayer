@@ -1119,7 +1119,7 @@ GameObject:
   - component: {fileID: 6404172651403236091}
   - component: {fileID: 8713304627163209619}
   - component: {fileID: 4135922944420360844}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: BricksTilemap (for bricks/colliders)
   m_TagString: Brick
   m_Icon: {fileID: 0}

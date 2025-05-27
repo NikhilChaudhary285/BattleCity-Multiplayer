@@ -7,10 +7,10 @@ public class Bullet : MonoBehaviour
     public float lifetime = 2f;
     private float timer;
     private Rigidbody2D rb;
+	[SerializeField] private GameObject explosionPrefab;
+	[SerializeField] private Transform colliderDetectionPoint; // assign in Inspector
 
-    [SerializeField] private GameObject explosionPrefab;
-
-    [TagField][SerializeField] private string neglectCollisionTag; // Same-team tag (ignored)
+	[TagField][SerializeField] private string neglectCollisionTag; // Same-team tag (ignored)
     [TagField][SerializeField] private string acceptCollisionTag;  // Opponent tag (destroyed/pool)
 
     public bool isEnemyBullet;
@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-    }
+	}
 
     public void Fire(Vector2 direction)
     {
@@ -84,7 +84,7 @@ public class Bullet : MonoBehaviour
         Tilemap tilemap = collision.GetComponent<Tilemap>();
         if (tilemap != null)
         {
-            Vector3 hitPos = transform.position;
+            Vector3 hitPos = colliderDetectionPoint.position;
             Vector3Int cell = tilemap.WorldToCell(hitPos);
             TileBase tile = tilemap.GetTile(cell);
 
@@ -104,4 +104,8 @@ public class Bullet : MonoBehaviour
         // 5. Default behavior
         BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
     }
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		
+	}
 }
