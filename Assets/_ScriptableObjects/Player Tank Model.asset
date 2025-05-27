@@ -15,4 +15,5 @@ MonoBehaviour:
   moveSpeed: 5
   rotationSpeed: 180
   fireCooldown: 0.5
+  playerExplosionPrefab: {fileID: 5828882062172841195, guid: 9ee3df6bc3c427647b95b9c454a5662f, type: 3}
   lastFiredTime: 45.84643

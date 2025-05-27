@@ -50,5 +50,17 @@ public class PlayerTankView : MonoBehaviour
         controller.RecordFireTime();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision == null) return;
+        // 2. Player collides with a valid target (enemy)
+        if (collision.gameObject.GetComponent<EnemyTankController>() != null)
+        {
+            // Spawn explosion at player world position
+            Instantiate(controller.modelData.playerExplosionPrefab, transform.position, Quaternion.identity);
+            // Enemy hit player: destroy player
+            Destroy(gameObject);
+        }
+    }
 }
 

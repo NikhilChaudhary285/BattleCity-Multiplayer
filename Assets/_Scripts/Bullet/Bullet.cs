@@ -7,7 +7,9 @@ public class Bullet : MonoBehaviour
     public float lifetime = 2f;
     private float timer;
     private Rigidbody2D rb;
-	[SerializeField] private GameObject explosionPrefab;
+	[SerializeField] private GameObject brickExplosionPrefab;
+	[SerializeField] private GameObject playerExplosionPrefab;
+	[SerializeField] private GameObject enemyExplosionPrefab;
 	[SerializeField] private Transform colliderDetectionPoint; // assign in Inspector
 
 	[TagField][SerializeField] private string neglectCollisionTag; // Same-team tag (ignored)
@@ -49,17 +51,27 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log($"[HIT] Bullet hit: {acceptCollisionTag}");
 
+            // Enemy bullet hit player: destroy player
             if (isEnemyBullet)
-            {
+            {        
+                // Storing Spawn explosion from hitted player world position
+                Vector3 explosionPos = collision.transform.position;
                 // Enemy bullet hit player: destroy player
                 Destroy(collision.gameObject);
+                // Spawn explosion at player world position
+                Instantiate(playerExplosionPrefab, explosionPos, Quaternion.identity);
             }
             else
             {
                 // Player bullet hit enemy: return enemy to pool
                 if (collision.TryGetComponent<EnemyTankController>(out var enemy))
                 {
+                    // Storing Spawn explosion from hitted enemy world position
+                    Vector3 explosionPos = collision.transform.position;
+                    // Player bullet hit enemy: return enemy to pool
                     EnemyPool.Instance.ReturnEnemy(enemy);
+                    // Spawn explosion at enemy world position
+                    Instantiate(enemyExplosionPrefab, explosionPos, Quaternion.identity);
                 }
                 else
                 {
@@ -94,7 +106,7 @@ public class Bullet : MonoBehaviour
 
                 // Spawn explosion at tile's world position
                 Vector3 explosionPos = tilemap.GetCellCenterWorld(cell);
-                Instantiate(explosionPrefab, explosionPos, Quaternion.identity);
+                Instantiate(brickExplosionPrefab, explosionPos, Quaternion.identity);
 
                 BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
                 return;

@@ -80,6 +80,12 @@ TagManager:
   - name: Bullet
     uniqueID: 2074657045
     locked: 0
-  - name: Explosion
+  - name: BrickExplosion
     uniqueID: 1312017983
+    locked: 0
+  - name: PlayerExplosion
+    uniqueID: 1899166205
+    locked: 0
+  - name: EnemyExplosion
+    uniqueID: 139527015
     locked: 0

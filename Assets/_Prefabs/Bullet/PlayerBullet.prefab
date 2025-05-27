@@ -174,7 +174,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   lifetime: 2
-  explosionPrefab: {fileID: 9087391059591752713, guid: 09a96205c9f31a347beb490a3ad5a6c2, type: 3}
+  brickExplosionPrefab: {fileID: 9087391059591752713, guid: 09a96205c9f31a347beb490a3ad5a6c2, type: 3}
+  playerExplosionPrefab: {fileID: 5828882062172841195, guid: 9ee3df6bc3c427647b95b9c454a5662f, type: 3}
+  enemyExplosionPrefab: {fileID: 5954279558617776368, guid: f03f1f7a7f317754db6df4027d32cdb0, type: 3}
   colliderDetectionPoint: {fileID: 8242271676000648971}
   neglectCollisionTag: PlayerBullet
   acceptCollisionTag: Enemy

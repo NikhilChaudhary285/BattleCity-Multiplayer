@@ -6,8 +6,9 @@ public class PlayerTankModel : ScriptableObject
 	public float moveSpeed = 5f;
 	public float rotationSpeed = 180f;
 	public float fireCooldown = 0.5f;
+    public GameObject playerExplosionPrefab;
 
-	[HideInInspector]
+    [HideInInspector]
 	public float lastFiredTime = -999f;
 
 	#region ---- OF ----
