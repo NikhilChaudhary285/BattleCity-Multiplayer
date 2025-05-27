@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7549346918007857531}
   - component: {fileID: 4563129183154328824}
-  - component: {fileID: 5595147262183892010}
+  - component: {fileID: -9066225990208889374}
   - component: {fileID: 4989564261278475273}
   - component: {fileID: 4178898609212908573}
   m_Layer: 11
   m_Name: PlayerBullet
-  m_TagString: Bullet
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,8 +62,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &5595147262183892010
-CircleCollider2D:
+--- !u!61 &-9066225990208889374
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,9 +94,19 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.000000029802322, y: 0.017970681}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.19, y: 0.46}
+    newSize: {x: 0.2, y: 0.2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Size: {x: 0.2506802, y: 0.62663686}
+  m_EdgeRadius: 0
 --- !u!212 &4989564261278475273
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -164,6 +174,6 @@ MonoBehaviour:
   speed: 10
   lifetime: 2
   explosionPrefab: {fileID: 9087391059591752713, guid: 09a96205c9f31a347beb490a3ad5a6c2, type: 3}
-  neglectCollisionTag: Bullet
+  neglectCollisionTag: PlayerBullet
   acceptCollisionTag: Enemy
   isEnemyBullet: 0

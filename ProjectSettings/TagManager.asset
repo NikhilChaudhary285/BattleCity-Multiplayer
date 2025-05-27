@@ -7,7 +7,9 @@ TagManager:
   - EagleBase
   - Water
   - Enemy
-  - Bullet
+  - PlayerBullet
+  - EnemyBullet
+  - Brick
   layers:
   - Default
   - TransparentFX
@@ -15,15 +17,15 @@ TagManager:
   - 
   - Water
   - UI
-  - 
   - Ground
   - Wall
+  - Brick
   - Player
   - Enemy
-  - Bullet
+  - PlayerBullet
+  - EnemyBullet
   - EagleBase
   - Water
-  - 
   - 
   - 
   - 
