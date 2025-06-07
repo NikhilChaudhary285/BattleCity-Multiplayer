@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 486054314d6161d47888eadc202416b0, type: 3}
+  m_Name: Power Green Tank Stats SO Model
+  m_EditorClassIdentifier: 
+  tankType: 2
+  moveSpeed: 1.2
+  maxHealth: 1
+  fireRate: 1.5
+  tankSprite: {fileID: 0}
+  upperTankSprite: {fileID: 0}
+  tankSpriteColor: {r: 0.41960785, g: 0.5568628, b: 0.13725491, a: 1}
+  enemyExplosionPrefab: {fileID: 5954279558617776368, guid: f03f1f7a7f317754db6df4027d32cdb0, type: 3}
+  isBurstFire: 1
+  burstCount: 3
+  burstDelay: 0.2
+  notes: Power Green Tank - Shoots 3 bullets in burst.

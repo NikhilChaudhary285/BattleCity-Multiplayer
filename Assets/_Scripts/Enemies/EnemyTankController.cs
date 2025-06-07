@@ -1,22 +1,34 @@
 using UnityEngine;
-using UnityEngine.UIElements;
+using System.Collections;
 
 public class EnemyTankController : MonoBehaviour
 {
+    [Tooltip("Main body SpriteRenderer used to display the enemy's tank base sprite")]
+    [SerializeField] private SpriteRenderer bodyRenderer;
+
+    [Tooltip("Upper part SpriteRenderer used to render the rotating tank cannon or turret")]
+    [SerializeField] private SpriteRenderer upperPartBodyRenderer;
+
+    [Tooltip("Rigidbody2D component used for enemy tank movement and physics")]
+    public Rigidbody2D rb;
+
+    [Tooltip("Firing point (position and direction of bullet)")]
+    public Transform enemyFirePoint;
+
+    [Tooltip("ScriptableObject containing stats like speed, health, and damage for the tank")]
+    public TankStatsSO Stats;
+
+    [Tooltip("Enemy health handler for managing hit points and death logic")]
+    public EnemyHealth health;
+
     [Tooltip("Strategy Pattern for AI Movement")]
     private IEnemyMovementStrategy movementStrategy;
 
     [Tooltip("Current AI state based on the State Pattern (e.g., Move, Attack, Dead, Patrol, Chase)")]
     private IEnemyState currentState;
 
-    [Tooltip("Rigidbody2D component used for enemy tank movement and physics")]
-    public Rigidbody2D rb;
-
-    [Tooltip("ScriptableObject containing stats like speed, health, and damage for the tank")]
-    public TankStatsSO Stats;
-
-    [Tooltip("Firing point (position and direction of bullet)")]
-    public Transform enemyFirePoint;
+    [Tooltip("EnemyExplosionPrefab (For Explosion Effect whenever enemy die)")]
+    [HideInInspector] public GameObject enemyExplosionPrefab;
 
     [Tooltip("LayerMask used for detecting obstacles (optional for future use)")]
     public LayerMask obstacleMask;
@@ -42,6 +54,22 @@ public class EnemyTankController : MonoBehaviour
 
         rb.velocity = Vector2.zero;
         lastFireTime = -Stats.fireRate;
+
+        health.Init(this, Stats.maxHealth);
+
+        if (bodyRenderer != null && Stats.tankSprite != null)
+        {
+            bodyRenderer.sprite = Stats.tankSprite;
+            upperPartBodyRenderer.sprite = Stats.upperTankSprite;
+        }
+
+        if (bodyRenderer != null && Stats.tankSpriteColor != null)
+        {
+            bodyRenderer.color = Stats.tankSpriteColor;
+            upperPartBodyRenderer.color = Stats.tankSpriteColor;            
+        }
+
+        enemyExplosionPrefab = Stats.enemyExplosionPrefab;
     }
 
     void Update()
@@ -50,12 +78,44 @@ public class EnemyTankController : MonoBehaviour
         currentState?.Execute(this);
     }
 
-    public void ContinuousFire()
+    #region ---- Old Method ContinuousFire() ---
+    /*public void ContinuousFire()
     {
         if (Time.time - lastFireTime >= Stats.fireRate)
         {
             Fire();
             lastFireTime = Time.time;
+        }
+    }*/
+    #endregion ---- Old Method ContinuousFire() ---
+
+    public void ContinuousFire()
+    {
+        if (!Stats.isBurstFire)
+        {
+            if (Time.time - lastFireTime >= Stats.fireRate)
+            {
+                Fire();
+                lastFireTime = Time.time;
+            }
+        }
+        else
+        {
+            // If burst fire, start burst sequence if cooldown has passed
+            if (Time.time - lastFireTime >= Stats.fireRate)
+            {
+                lastFireTime = Time.time;
+                StartCoroutine(BurstFireCoroutine());
+            }
+        }
+    }
+
+    private IEnumerator BurstFireCoroutine()
+    {
+        for (int i = 0; i < Stats.burstCount; i++)
+        {
+            Fire();
+            yield return new WaitForSeconds(Stats.burstDelay); // Small delay between each burst shot
         }
     }
 
@@ -78,4 +138,5 @@ public class EnemyTankController : MonoBehaviour
         // Set bullet velocity using enemyShootDirection
         bullet.GetComponent<Bullet>().Fire(enemyShootDirection);
     }
+
 }

@@ -3,17 +3,30 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Tank/PlayerTankData")]
 public class PlayerTankModel : ScriptableObject
 {
-	public float moveSpeed = 5f;
-	public float rotationSpeed = 180f;
-	public float fireCooldown = 0.5f;
-    public GameObject playerExplosionPrefab;
+    [Header("Movement")]
+    public float moveSpeed = 5f;
+    public float rotationSpeed = 180f;
+
+    [Header("Health")]
+    public int maxHealth = 1; // For players that are having armored tanks, e.g. 4 hits
+
+    [Header("Firing")]
+    public float fireCooldown = 0.5f;
+    public int burstCount = 1; // optional: player burst fire support
+    public bool isBurstFire = false;
 
     [HideInInspector]
-	public float lastFiredTime = -999f;
+    public float lastFiredTime = -999f;
 
-	#region ---- OF ----
+    [Header("Visuals")]
+    public Sprite tankSprite;
+    public Sprite upperTankSprite;
+    public Color tankSpriteColor = Color.white;
 
-	/*public bool CanFire() => Time.time >= lastFiredTime + fireCooldown;
-	public void RecordFireTime() => lastFiredTime = Time.time;*/
-	#endregion ---- OF ----
+    [Header("Visual Effects")]
+    public GameObject playerExplosionPrefab;
+
+    [Header("Other Settings")]
+    [TextArea]
+    public string notes;
 }

@@ -57,7 +57,7 @@ public class PlayerTankView : MonoBehaviour
         if (collision.gameObject.GetComponent<EnemyTankController>() != null)
         {
             // Spawn explosion at player world position
-            Instantiate(controller.modelData.playerExplosionPrefab, transform.position, Quaternion.identity);
+            Instantiate(controller.Model.playerExplosionPrefab, transform.position, Quaternion.identity);
             // Enemy hit player: destroy player
             Destroy(gameObject);
         }

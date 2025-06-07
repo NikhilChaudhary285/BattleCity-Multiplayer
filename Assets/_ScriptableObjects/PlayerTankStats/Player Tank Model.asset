@@ -14,6 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotationSpeed: 180
+  maxHealth: 1
   fireCooldown: 0.5
-  playerExplosionPrefab: {fileID: 5828882062172841195, guid: 9ee3df6bc3c427647b95b9c454a5662f, type: 3}
+  burstCount: 1
+  isBurstFire: 0
   lastFiredTime: 45.84643
+  tankSprite: {fileID: 0}
+  upperTankSprite: {fileID: 0}
+  tankSpriteColor: {r: 1, g: 1, b: 1, a: 1}
+  playerExplosionPrefab: {fileID: 5828882062172841195, guid: 9ee3df6bc3c427647b95b9c454a5662f, type: 3}
+  notes: Player Tank Model

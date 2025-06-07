@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1083138860784463286}
   - component: {fileID: 4690508386159279892}
   m_Layer: 10
-  m_Name: TankUpperPart
+  m_Name: EnemyTankUpperPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,9 +289,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea83d78f2a1d19943827c245006aa1b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: {fileID: 9119953020686093186}
+  bodyRenderer: {fileID: 496096682806484687}
+  upperPartBodyRenderer: {fileID: 4690508386159279892}
   rb: {fileID: 7659041061641727767}
   Stats: {fileID: 11400000, guid: 07d682ad21b6fd54492d1db571eedfe2, type: 2}
   enemyFirePoint: {fileID: 1831872759120525751}
+  enemyExplosionPrefab: {fileID: 0}
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0

@@ -10,9 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 486054314d6161d47888eadc202416b0, type: 3}
-  m_Name: Green Enemy Tank Stats SO Model
+  m_Name: Core Enemy Tank Stats SO Model
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  maxHealth: 50
-  fireRate: 0.75
-  bulletPrefab: {fileID: 8528446390528264748, guid: 68aa0196ffba8db4cb138502ba5b108e, type: 3}
+  tankType: 0
+  moveSpeed: 1
+  maxHealth: 1
+  fireRate: 2
+  tankSprite: {fileID: 0}
+  tankSpriteColor: {r: 1, g: 1, b: 1, a: 1}
+  isBurstFire: 0
+  burstCount: 1
+  notes: Core Enemy Tank - Standard enemy. Slow and weak.

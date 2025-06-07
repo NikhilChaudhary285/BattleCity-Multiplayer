@@ -8,8 +8,6 @@ public class Bullet : MonoBehaviour
     private float timer;
     private Rigidbody2D rb;
 	[SerializeField] private GameObject brickExplosionPrefab;
-	[SerializeField] private GameObject playerExplosionPrefab;
-	[SerializeField] private GameObject enemyExplosionPrefab;
 	[SerializeField] private Transform colliderDetectionPoint; // assign in Inspector
 
 	[TagField][SerializeField] private string neglectCollisionTag; // Same-team tag (ignored)
@@ -52,26 +50,16 @@ public class Bullet : MonoBehaviour
             Debug.Log($"[HIT] Bullet hit: {acceptCollisionTag}");
 
             // Enemy bullet hit player: destroy player
-            if (isEnemyBullet)
-            {        
-                // Storing Spawn explosion from hitted player world position
-                Vector3 explosionPos = collision.transform.position;
-                // Enemy bullet hit player: destroy player
-                Destroy(collision.gameObject);
-                // Spawn explosion at player world position
-                Instantiate(playerExplosionPrefab, explosionPos, Quaternion.identity);
+            if (isEnemyBullet && collision.TryGetComponent<PlayerTankController>(out var player))
+            {
+                player.health.TakeDamage();
             }
             else
             {
-                // Player bullet hit enemy: return enemy to pool
+                // Player bullet hit enemy: enemy will take damage
                 if (collision.TryGetComponent<EnemyTankController>(out var enemy))
-                {
-                    // Storing Spawn explosion from hitted enemy world position
-                    Vector3 explosionPos = collision.transform.position;
-                    // Player bullet hit enemy: return enemy to pool
-                    EnemyPool.Instance.ReturnEnemy(enemy);
-                    // Spawn explosion at enemy world position
-                    Instantiate(enemyExplosionPrefab, explosionPos, Quaternion.identity);
+                {    
+                    enemy.health.TakeDamage();
                 }
                 else
                 {
@@ -116,8 +104,5 @@ public class Bullet : MonoBehaviour
         // 5. Default behavior
         BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
     }
-	private void OnCollisionEnter2D(Collision2D collision)
-	{
-		
-	}
+
 }
