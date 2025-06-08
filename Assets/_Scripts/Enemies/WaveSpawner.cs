@@ -20,8 +20,9 @@ public class WaveSpawner : MonoBehaviour
 			enemy.transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
 			enemy.Init(enemyTypes[Random.Range(0, enemyTypes.Length)]);
 
-			enemy.SetStrategy(new TargetBaseStrategy(GameManager.Instance.Base.transform));
-			enemy.SetState(new MoveState());
+			//enemy.SetStrategy(new TargetBaseStrategy(GameManager.Instance.Base.transform));
+            enemy.SetStrategy(new RandomDirectionStrategy());
+            enemy.SetState(new MoveState());
 
 			yield return new WaitForSeconds(spawnDelay);
 		}
