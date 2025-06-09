@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyHealth     : MonoBehaviour
+public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [Tooltip("CurrentHealth used for enemy health")]
     private int currentHealth;

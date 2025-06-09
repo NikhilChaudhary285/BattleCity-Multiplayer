@@ -143,4 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb764c31bab2be4eabe7a31a237d6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 3
+  eagleBaseExplosionPrefab: {fileID: 5828882062172841195, guid: 9ee3df6bc3c427647b95b9c454a5662f, type: 3}

@@ -20,13 +20,30 @@ public class RandomDirectionStrategy : IEnemyMovementStrategy
         enemy.rb.velocity = currentDirection * enemy.Stats.moveSpeed;
     }
 
-    private Vector2 GetRandomDirection()
+    #region ---- GetRandomDirection() Old Method ----
+    /*private Vector2 GetRandomDirection()
     {
         int randomIndex = Random.Range(0, 4);
         return randomIndex switch
         {
             0 => Vector2.up,
             1 => Vector2.down,
+            2 => Vector2.left,
+            3 => Vector2.right,
+            _ => Vector2.down
+        };
+    }*/
+    #endregion ---- GetRandomDirection() )ld Method ----
+
+    private Vector2 GetRandomDirection()
+    {
+        // Downward bias: more weight for down
+        int index = Random.Range(0, 6); // 0 to 5
+
+        return index switch
+        {
+            0 => Vector2.up,
+            1 or 4 or 5 => Vector2.down,  // 50% chance to move down
             2 => Vector2.left,
             3 => Vector2.right,
             _ => Vector2.down

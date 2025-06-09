@@ -7,18 +7,17 @@ public class Bullet : MonoBehaviour
     public float lifetime = 2f;
     private float timer;
     private Rigidbody2D rb;
-	[SerializeField] private GameObject brickExplosionPrefab;
-	[SerializeField] private Transform colliderDetectionPoint; // assign in Inspector
+    [SerializeField] private GameObject brickExplosionPrefab;
+    [SerializeField] private Transform colliderDetectionPoint; // assign in Inspector
 
-	[TagField][SerializeField] private string neglectCollisionTag; // Same-team tag (ignored)
-    [TagField][SerializeField] private string acceptCollisionTag;  // Opponent tag (destroyed/pool)
+    [TagField][SerializeField] private string neglectCollisionTag; // Same-team tag (ignored)
 
     public bool isEnemyBullet;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-	}
+    }
 
     public void Fire(Vector2 direction)
     {
@@ -44,21 +43,26 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        // 2. Bullet hits a valid target (enemy or player)
-        if (collision.CompareTag(acceptCollisionTag))
+        // 2. Bullet hits a valid target (enemy or player or eagleBase)
+        if (collision.TryGetComponent<IDamageable>(out var damageable))
         {
-            Debug.Log($"[HIT] Bullet hit: {acceptCollisionTag}");
+            Debug.Log($"[HIT] Bullet hit: {collision.gameObject.tag}");
 
             // Enemy bullet hit player: destroy player
             if (isEnemyBullet && collision.TryGetComponent<PlayerTankController>(out var player))
             {
                 player.health.TakeDamage();
             }
+            // Enemy bullet hit eagleBase: eagleBase will take damage
+            else if (isEnemyBullet && collision.TryGetComponent<BaseHealthManager>(out var eagleBase))
+            {
+                eagleBase.TakeDamage();
+            }
+            // Player bullet hit enemy: enemy will take damage
             else
             {
-                // Player bullet hit enemy: enemy will take damage
                 if (collision.TryGetComponent<EnemyTankController>(out var enemy))
-                {    
+                {
                     enemy.health.TakeDamage();
                 }
                 else

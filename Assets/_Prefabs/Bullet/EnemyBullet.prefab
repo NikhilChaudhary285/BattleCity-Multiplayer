@@ -206,8 +206,9 @@ MonoBehaviour:
   speed: 10
   lifetime: 2
   brickExplosionPrefab: {fileID: 9087391059591752713, guid: 09a96205c9f31a347beb490a3ad5a6c2, type: 3}
-  playerExplosionPrefab: {fileID: 5828882062172841195, guid: 9ee3df6bc3c427647b95b9c454a5662f, type: 3}
   colliderDetectionPoint: {fileID: 8554615298446947477}
   neglectCollisionTag: EnemyBullet
-  acceptCollisionTag: Player
+  acceptCollisionTag:
+  - 
+  - 
   isEnemyBullet: 0
