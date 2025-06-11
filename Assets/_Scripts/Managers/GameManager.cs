@@ -12,7 +12,15 @@ public class GameManager : Singleton<GameManager>
 	{
 		CurrentState = newState;
 		Debug.Log("Game State Changed to: " + newState);
-	}
+
+        if (newState == GameState.GameOver)
+        {
+            UIManager.Instance?.ShowGameOver(); // Trigger GameOver UI animation
+
+            // Automatically restart after delay
+            //StartCoroutine(SceneLoader.Instance.ReloadAfterDelay(2f)); // 2 second delay
+        }
+    }
 
 	private void Start()
 	{

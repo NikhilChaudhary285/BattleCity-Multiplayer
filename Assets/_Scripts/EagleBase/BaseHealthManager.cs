@@ -38,6 +38,9 @@ public class BaseHealthManager : MonoBehaviour, IDamageable
         {
             // Spawn explosion at eagleBase world position
             Instantiate(eagleBaseExplosionPrefab, transform.position, Quaternion.identity);
+            // Eagle Base Destroyed
+            Debug.Log("Eagle Base Destroyed!");
+            GameManager.Instance.SetState(GameManager.GameState.GameOver);
             // Enemy hit eagleBase: destroy eagleBase
             Destroy(gameObject);
         }

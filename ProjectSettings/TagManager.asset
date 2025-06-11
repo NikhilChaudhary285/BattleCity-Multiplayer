@@ -89,3 +89,6 @@ TagManager:
   - name: EnemyExplosion
     uniqueID: 139527015
     locked: 0
+  - name: EagleBaseExplosion
+    uniqueID: 3979346013
+    locked: 0
