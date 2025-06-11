@@ -25,6 +25,8 @@ public class EnemyPool : MonoBehaviour
 
 	public void ReturnEnemy(EnemyTankController enemy)
 	{
+		enemy.OnDeath?.Invoke(); // notify WaveSpawner: That enemy is going to inactive state or dying
+		enemy.OnDeath = null; // And after invoking OnDeath, nullify it: To prevents memory leaks.
 		enemy.gameObject.SetActive(false);
 		pool.Enqueue(enemy);
 	}

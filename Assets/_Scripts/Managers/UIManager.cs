@@ -32,5 +32,14 @@ public class UIManager : MonoBehaviour
         currentSceneUI?.HideGameOver();
     }
 
-    // Add more methods as needed (Pause, Fade, Victory)
+	public void SetWaveText(int wave)
+	{
+		currentSceneUI?.SetWave(wave); // ISceneUI supports SetWave()
+	}
+	public void SetEnemyCount(int count)
+	{
+		currentSceneUI?.SetEnemyCount(count);
+	}
+
+	// Add more methods as needed (Pause, Fade, Victory)
 }

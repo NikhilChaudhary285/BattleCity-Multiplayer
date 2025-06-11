@@ -6,24 +6,26 @@ public class GameManager : Singleton<GameManager>
 	public GameState CurrentState { get; private set; }
 
 	[Header("References")]
-	public BaseHealthManager Base; // Reference to the Eagle Base
+
+	[Tooltip("Wave Spawner")][SerializeField] private WaveSpawner waveSpawner; // Reference to the Wave Spawner
+
+	[Tooltip("Eagle Base Health Manager")] public BaseHealthManager EagleBase; // Reference to the Eagle EagleBase
 
 	public void SetState(GameState newState)
 	{
 		CurrentState = newState;
 		Debug.Log("Game State Changed to: " + newState);
 
-        if (newState == GameState.GameOver)
-        {
-            UIManager.Instance?.ShowGameOver(); // Trigger GameOver UI animation
-
-            // Automatically restart after delay
-            //StartCoroutine(SceneLoader.Instance.ReloadAfterDelay(2f)); // 2 second delay
-        }
-    }
+		if (newState == GameState.GameOver)
+		{
+			UIManager.Instance?.ShowGameOver(); // Trigger GameOver UI animation
+		}
+	}
 
 	private void Start()
 	{
 		SetState(GameState.Playing); // or load menu scene
+		// Start waves of enemy spawing
+		waveSpawner.StartWaves();
 	}
 }

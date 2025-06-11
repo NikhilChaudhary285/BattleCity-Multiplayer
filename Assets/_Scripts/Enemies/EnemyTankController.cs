@@ -21,7 +21,10 @@ public class EnemyTankController : MonoBehaviour
     [Tooltip("Enemy health handler for managing hit points and death logic")]
     public EnemyHealth health;
 
-    [Tooltip("Strategy Pattern for AI Movement")]
+    [Tooltip("Enemy OnDeath Action handler for updating activeEnemies in WaveSpawner")]
+	public System.Action OnDeath;
+
+	[Tooltip("Strategy Pattern for AI Movement")]
     private IEnemyMovementStrategy movementStrategy;
 
     [Tooltip("Current AI state based on the State Pattern (e.g., Move, Attack, Dead, Patrol, Chase)")]
@@ -77,17 +80,6 @@ public class EnemyTankController : MonoBehaviour
         movementStrategy?.Move(this);
         currentState?.Execute(this);
     }
-
-    #region ---- Old Method ContinuousFire() ---
-    /*public void ContinuousFire()
-    {
-        if (Time.time - lastFireTime >= Stats.fireRate)
-        {
-            Fire();
-            lastFireTime = Time.time;
-        }
-    }*/
-    #endregion ---- Old Method ContinuousFire() ---
 
     public void ContinuousFire()
     {
