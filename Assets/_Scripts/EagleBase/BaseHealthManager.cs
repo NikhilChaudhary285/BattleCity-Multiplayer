@@ -8,6 +8,7 @@ public class BaseHealthManager : MonoBehaviour, IDamageable
 
 	private void Awake()
 	{
+		GameManager.Instance.RegisterEagleBase(this); // Registering EagleBase To GameManager
 		currentHealth = maxHealth;
 	}
 

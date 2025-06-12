@@ -6,7 +6,7 @@ public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance { get; private set; }
 
-    private void Awake()
+	private void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -17,13 +17,12 @@ public class SceneLoader : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        // Automatically start after delay
-        StartCoroutine(ReloadAfterDelay(2f)); // 2 second delay
-    }
+	private void Start()
+	{
+		// No automatic scene changes here
+	}
 
-    public void LoadMainMenu() => StartCoroutine(LoadSceneAsync("MainMenu"));
+	public void LoadMainMenu() => StartCoroutine(LoadSceneAsync("MainMenu"));
 
     public void LoadGame() => StartCoroutine(LoadSceneAsync("Gameplay"));
 
@@ -46,11 +45,33 @@ public class SceneLoader : MonoBehaviour
 
         // Optional: UIManager.HideLoadingScreen();
     }
-    public IEnumerator ReloadAfterDelay(float delay)
-    {
-        yield return new WaitForSecondsRealtime(delay); // realtime ignores Time.timeScale = 0
+	public IEnumerator ReloadSceneAfterDelay(float delay, Scene scene)
+	{
+		yield return new WaitForSecondsRealtime(delay); // realtime ignores Time.timeScale = 0
 
-        Time.timeScale = 1f; // Reset in case it was paused/frozen
-        LoadGame();
-    }
+		Time.timeScale = 1f; // Reset in case it was paused/frozen
+
+		switch (scene)
+		{
+			case Scene.MainMenu:
+				LoadMainMenu();
+				break;
+
+			case Scene.GamePlay:
+				LoadGame();
+				break;
+
+			default:
+				Debug.LogWarning("Unhandled scene type: " + scene);
+				break;
+		}
+	}
+
 }
+
+public enum Scene
+{
+	MainMenu,
+	GamePlay
+}
+

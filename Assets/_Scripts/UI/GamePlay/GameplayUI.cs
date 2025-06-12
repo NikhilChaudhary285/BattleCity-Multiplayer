@@ -29,7 +29,7 @@ public class GameplayUI : MonoBehaviour, ISceneUI
 		waveStatusText.text = $"Wave: {currentWave} — Enemies Left: {currentEnemyCount}";
 	}
 
-	private void Start()
+	private void Awake()
     {
         UIManager.Instance?.RegisterSceneUI(this);
     }
