@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-
+			
 public class GameManager : Singleton<GameManager>
 {
-	public enum GameState { MainMenu, Playing, Paused, GameOver }
+	public enum GameState { MainMenu, Playing, Paused, GameOver, GameWin }
 
 	public GameState CurrentStateType { get; private set; }
 	private IGameState currentState;
@@ -22,6 +23,7 @@ public class GameManager : Singleton<GameManager>
 
 	private void Start()
 	{
+		CurrentStateType = GameState.Paused;
 		SetState(GameState.MainMenu); // Transition to MainMenu state: To Start menu logic or preload (if needed) 
 	}
 
@@ -32,6 +34,7 @@ public class GameManager : Singleton<GameManager>
 			{ GameState.MainMenu, new MainMenuState() },
 			{ GameState.Playing, new PlayingState() },
 			{ GameState.GameOver, new GameOverState() },
+			{ GameState.GameWin, new GameWinState() },
             { GameState.Paused, new PausedState() } 
         };
 	}
@@ -55,7 +58,7 @@ public class GameManager : Singleton<GameManager>
 		}
 	}
 
-	public WaveSpawner WaveSpawner => waveSpawner;
+    public WaveSpawner WaveSpawner => waveSpawner;
 
 	public void RegisterWaveSpawner(WaveSpawner _waveSpawner)
 	{

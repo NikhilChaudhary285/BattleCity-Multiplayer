@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using static GameManager;
 
 public class AnimationStateExitHandler : MonoBehaviour
 {
@@ -37,9 +38,12 @@ public class AnimationStateExitHandler : MonoBehaviour
 			Debug.Log($"[ANIMATION COMPLETE] '{stateName}' finished on {gameObject.name}");
 
 			if (reloadGameplayScene)
-				SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.ReloadSceneAfterDelay(2f, Scene.GamePlay));
+			{
+                SceneLoader.Instance.LoadMainMenu();
+                GameManager.Instance.SetState(GameState.MainMenu); // Transition to MainMenu state: To Start menu logic or preload (if needed) 
+            }				
 
-			if (OnAnimationComplete != null)
+            if (OnAnimationComplete != null)
 				OnAnimationComplete.Invoke();
 		}
 	}

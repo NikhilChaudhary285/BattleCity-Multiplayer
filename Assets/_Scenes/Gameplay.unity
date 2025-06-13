@@ -589,7 +589,7 @@ Animator:
   m_GameObject: {fileID: 219272217}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c2eb421c14c8e0b44aac893220047937, type: 2}
+  m_Controller: {fileID: 9100000, guid: dd0ec288327e7a347950a1591b7fb7fe, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -620,7 +620,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAME OVER
+  m_text: GAME WIN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -709,8 +709,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e465d51c6ce3caa43874c66538936e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 48938188}
-  stateName: GameOverFadeIn
+  animator: {fileID: 219272220}
+  stateName: GameWinFadeIn
   delayAfterExit: 2
   reloadGameplayScene: 1
 --- !u!1 &235887015
@@ -738,7 +738,7 @@ Transform:
   m_GameObject: {fileID: 235887015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.5, y: 1.5, z: 0}
+  m_LocalPosition: {x: 8.5, y: -4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1600,6 +1600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOverPanel: {fileID: 1074662262}
+  gameWinPanel: {fileID: 305232109}
   waveStatusText: {fileID: 317259561}
 --- !u!1 &1932756777
 GameObject:

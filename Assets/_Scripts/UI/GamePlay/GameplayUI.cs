@@ -5,6 +5,7 @@ public class GameplayUI : MonoBehaviour, ISceneUI
 {
     [Header("PANEL")]
     [Tooltip("GameOver Panel")] [SerializeField] private GameObject gameOverPanel;
+	[Tooltip("GameWin Panel")] [SerializeField] private GameObject gameWinPanel;
 
     [Header("TEXT")]
 	[Tooltip("Wave Status Text")] [SerializeField] private TextMeshProUGUI waveStatusText;
@@ -37,10 +38,20 @@ public class GameplayUI : MonoBehaviour, ISceneUI
     public void ShowGameOver()
     {
         gameOverPanel.SetActive(true);
+    } 
+	
+	public void ShowGameWin()
+    {
+        gameWinPanel.SetActive(true);
     }
 
     public void HideGameOver()
     {
         gameOverPanel.SetActive(false);
+    } 
+	
+	public void HideGameWin()
+    {
+        gameWinPanel.SetActive(false);
     }
 }

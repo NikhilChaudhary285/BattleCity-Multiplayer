@@ -7,7 +7,6 @@ public class PlayingState : IGameState
 		Debug.Log("State: Playing");
 
 		SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.ReloadSceneAfterDelay(2f, Scene.GamePlay));
-		gameManager.WaveSpawner?.StartWaves();
 		Time.timeScale = 1f;
 	}
 

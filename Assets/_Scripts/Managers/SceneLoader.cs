@@ -16,7 +16,7 @@ public class SceneLoader : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
+    
 	private void Start()
 	{
 		// No automatic scene changes here

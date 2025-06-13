@@ -7,7 +7,6 @@ public class GameOverState : IGameState
 		Debug.Log("State: GameOver");
 
 		UIManager.Instance?.ShowGameOver();
-		Time.timeScale = 0f;
 	}
 
 	public void ExitState(GameManager gameManager)

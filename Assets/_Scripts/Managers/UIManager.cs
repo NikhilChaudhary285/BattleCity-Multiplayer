@@ -26,10 +26,20 @@ public class UIManager : MonoBehaviour
     {
         currentSceneUI?.ShowGameOver();
     }
+    
+    public void ShowGameWin()
+    {
+        currentSceneUI?.ShowGameWin();
+    }
 
     public void HideGameOver()
     {
         currentSceneUI?.HideGameOver();
+    } 
+    
+    public void HideGameWin()
+    {
+        currentSceneUI?.HideGameWin();
     }
 
 	public void SetWaveText(int wave)

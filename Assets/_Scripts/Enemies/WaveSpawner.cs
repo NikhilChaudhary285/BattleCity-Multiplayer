@@ -55,9 +55,12 @@ public class WaveSpawner : MonoBehaviour
 	private void Awake()
 	{
 		GameManager.Instance.RegisterWaveSpawner(this); // Registering EagleBase To GameManager
-	}
-
-	public void StartWaves()
+    }
+    private void Start()
+    {
+        StartWaves(); // Playing State: Start Enemy SpawnWaves
+    }
+    public void StartWaves()
 	{
 		currentWave = 1;
 
@@ -77,13 +80,15 @@ public class WaveSpawner : MonoBehaviour
 
 			SpawnWave(GetEnemyCountForWave(currentWave));
 		}
+		else
+		{
+            // Setting State To GameWin State
+            GameManager.Instance.SetState(GameManager.GameState.GameWin);
+        }
 	}
 	public void SpawnWave(int count)
 	{
-		if (enemySpawnWave != null) // Prevents Coroutine Memory Leak
-			StopCoroutine(enemySpawnWave);
-		else
-			enemySpawnWave = StartCoroutine(SpawnCoroutine(count));
+		StartCoroutine(SpawnCoroutine(count));
 	}
 	private IEnumerator SpawnCoroutine(int count)
 	{
