@@ -113,7 +113,7 @@ public class WaveSpawner : MonoBehaviour
 	}
 	private int GetEnemyCountForWave(int wave)
 	{
-		return 2 + wave * 2; // Example: scale difficulty per wave
+		return wave * 10;
 	}
 
 	private void HandleEnemyDeath()

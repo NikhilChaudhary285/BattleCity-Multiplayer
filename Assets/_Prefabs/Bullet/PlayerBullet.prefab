@@ -29,11 +29,12 @@ Transform:
   m_GameObject: {fileID: 3772007372240848951}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4976193, y: 0.71126086, z: 0}
+  m_LocalPosition: {x: -0, y: 0.71126086, z: 0}
   m_LocalScale: {x: 1.75, y: 1.25, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8242271676000648971}
+  - {fileID: 4810291962127302328}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6286090373041734787
@@ -175,12 +176,42 @@ MonoBehaviour:
   speed: 10
   lifetime: 2
   brickExplosionPrefab: {fileID: 9087391059591752713, guid: 09a96205c9f31a347beb490a3ad5a6c2, type: 3}
-  playerExplosionPrefab: {fileID: 5828882062172841195, guid: 9ee3df6bc3c427647b95b9c454a5662f, type: 3}
-  enemyExplosionPrefab: {fileID: 5954279558617776368, guid: f03f1f7a7f317754db6df4027d32cdb0, type: 3}
-  colliderDetectionPoint: {fileID: 8242271676000648971}
+  colliderDetectionPoints:
+  - {fileID: 8242271676000648971}
+  - {fileID: 4810291962127302328}
   neglectCollisionTag: PlayerBullet
-  acceptCollisionTag: Enemy
   isEnemyBullet: 0
+--- !u!1 &5531770211261297079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4810291962127302328}
+  m_Layer: 11
+  m_Name: RightOffset_BulletTileDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4810291962127302328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5531770211261297079}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.14, y: 0.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6060477285137582329}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7109942310482929110
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,9 +222,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8242271676000648971}
   m_Layer: 11
-  m_Name: BulletTileDetector
+  m_Name: LeftOffset_BulletTileDetector
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -206,7 +237,7 @@ Transform:
   m_GameObject: {fileID: 7109942310482929110}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6274, z: 0}
+  m_LocalPosition: {x: 0.14, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

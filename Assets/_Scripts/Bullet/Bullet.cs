@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Bullet : MonoBehaviour
@@ -8,7 +9,7 @@ public class Bullet : MonoBehaviour
     private float timer;
     private Rigidbody2D rb;
     [SerializeField] private GameObject brickExplosionPrefab;
-    [SerializeField] private Transform colliderDetectionPoint; // assign in Inspector
+    [SerializeField] private Transform[] colliderDetectionPoints; // assign in Inspector
 
     [TagField][SerializeField] private string neglectCollisionTag; // Same-team tag (ignored)
 
@@ -84,29 +85,44 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        // 4. Tilemap destruction (unchanged)
-        Tilemap tilemap = collision.GetComponent<Tilemap>();
-        if (tilemap != null)
-        {
-            Vector3 hitPos = colliderDetectionPoint.position;
-            Vector3Int cell = tilemap.WorldToCell(hitPos);
-            TileBase tile = tilemap.GetTile(cell);
+		// 4. Tilemap Destruction Handling
+		Tilemap tilemap = collision.GetComponent<Tilemap>();
 
-            if (tile is DestructibleTile destructibleTile && destructibleTile.isDestructible)
-            {
-                tilemap.SetTile(cell, null); // remove the tile                   
+		if (tilemap != null)
+		{
+			// Loop through each detection point to check for tile overlap
+			foreach (Transform detector in colliderDetectionPoints)
+			{
+				// Get the cell corresponding to the detector's world position
+				Vector3 hitPosition = detector.position;
+				Vector3Int cellPosition = tilemap.WorldToCell(hitPosition);
 
-                // Spawn explosion at tile's world position
-                Vector3 explosionPos = tilemap.GetCellCenterWorld(cell);
-                Instantiate(brickExplosionPrefab, explosionPos, Quaternion.identity);
+				// Get the tile at the calculated cell
+				TileBase tile = tilemap.GetTile(cellPosition);
 
-                BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
-                return;
-            }
-        }
+				// Check if the tile is destructible
+				if (tile is DestructibleTile destructibleTile && destructibleTile.isDestructible)
+				{
+					// Destroy the tile by setting it to null
+					tilemap.SetTile(cellPosition, null);
 
-        // 5. Default behavior
-        BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
+					// Spawn an explosion effect at the tile's center position
+					Vector3 explosionPosition = tilemap.GetCellCenterWorld(cellPosition);
+					Instantiate(brickExplosionPrefab, explosionPosition, Quaternion.identity);
+
+					// Return the bullet to the pool (based on its source: enemy/player)
+					BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
+
+					// Optional: Uncomment below if you want to destroy only one tile per bullet hit or not want to destroy both if bullet hit at center of them (attached tiles)
+					return;
+				}
+			}
+		}
+
+		// 5. Default behavior
+		BulletFactory.Instance.ReturnBullet(gameObject, isEnemyBullet);
     }
+
+
 
 }
