@@ -7,6 +7,12 @@ public class LobbyController : MonoBehaviourPunCallbacks, IPresenter
 {
 	[SerializeField] private LobbyUI lobbyUI;
 
+	public override void OnEnable()
+	{
+		base.OnEnable();
+		Initialize();
+	}
+
 	public void Initialize()
 	{
 		if (lobbyUI == null) return;
@@ -17,7 +23,7 @@ public class LobbyController : MonoBehaviourPunCallbacks, IPresenter
 
 		lobbyUI.SetStatus("Connecting to Photon...");
 	}
-	
+
 	public void Dispose()
 	{
 		if (lobbyUI == null) return;
@@ -31,9 +37,14 @@ public class LobbyController : MonoBehaviourPunCallbacks, IPresenter
 		if (string.IsNullOrWhiteSpace(roomName))
 			roomName = "Room_" + Random.Range(1000, 9999);
 
+		int selectedCount = 4; // You can fetch this from a dropdown or toggle in UI later
+
+		GameSettingsManager.Instance.SetMode(GameMode.Multiplayer4P, selectedCount);
+		GameSettingsManager.Instance.settings.roomName = roomName;
+
 		PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions
 		{
-			MaxPlayers = 4
+			MaxPlayers = (byte)selectedCount
 		}, TypedLobby.Default);
 
 		lobbyUI.SetStatus("Joining Room: " + roomName);
@@ -43,7 +54,7 @@ public class LobbyController : MonoBehaviourPunCallbacks, IPresenter
 	{
 		if (PhotonNetwork.IsMasterClient)
 		{
-			PhotonNetwork.LoadLevel("Gameplay");
+			PhotonNetwork.LoadLevel(levelName: "Gameplay");
 		}
 	}
 

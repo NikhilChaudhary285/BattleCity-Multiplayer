@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-			
+﻿using System.Collections.Generic;
+using UnityEngine;
+
 public class GameManager : Singleton<GameManager>
 {
 	public enum GameState { Init, MainMenu, Playing, Paused, GameOver, GameWin }
@@ -27,6 +26,19 @@ public class GameManager : Singleton<GameManager>
 		//SetState(GameState.Init); // Transition to Init state: To Setup Managers (Audio, Game, UI) and more (whatever needed) 
 		// While Development we can use this just to not start game from init state while making project for time saving
 		SetState(GameState.MainMenu);  // Transition to MainMenu state: To Start menu logic or preload (if needed) 
+
+		GameMode mode = GameSettingsManager.Instance.settings.selectedGameMode;
+		switch (mode)
+		{
+			case GameMode.SinglePlayer:
+				// spawn player + 3 AI
+				break;
+			case GameMode.Multiplayer2P:
+			case GameMode.Multiplayer3P:
+			case GameMode.Multiplayer4P:
+				// Setup Photon room, spawn network players
+				break;
+		}
 	}
 
 	private void InitStates()
@@ -38,8 +50,8 @@ public class GameManager : Singleton<GameManager>
 			{ GameState.Playing, new PlayingState() },
 			{ GameState.GameOver, new GameOverState() },
 			{ GameState.GameWin, new GameWinState() },
-            { GameState.Paused, new PausedState() } 
-        };
+			{ GameState.Paused, new PausedState() }
+		};
 	}
 
 	public void SetState(GameState newState)
@@ -61,7 +73,7 @@ public class GameManager : Singleton<GameManager>
 		}
 	}
 
-    public WaveSpawner WaveSpawner => waveSpawner;
+	public WaveSpawner WaveSpawner => waveSpawner;
 
 	public void RegisterWaveSpawner(WaveSpawner _waveSpawner)
 	{
