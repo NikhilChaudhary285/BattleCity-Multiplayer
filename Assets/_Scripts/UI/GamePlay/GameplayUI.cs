@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class GameplayUI : MonoBehaviour, ISceneUI
+public class GameplayUI : MonoBehaviour, IGameSceneUI
 {
     [Header("PANEL")]
     [Tooltip("GameOver Panel")] [SerializeField] private GameObject gameOverPanel;
@@ -12,6 +12,11 @@ public class GameplayUI : MonoBehaviour, ISceneUI
 
 	private int currentWave;
 	private int currentEnemyCount;
+
+	private void Awake()
+	{
+		UIManager.Instance?.RegisterSceneUI(this);
+	}
 
 	public void SetWave(int waveNumber)
 	{
@@ -29,11 +34,6 @@ public class GameplayUI : MonoBehaviour, ISceneUI
 	{
 		waveStatusText.text = $"Wave: {currentWave} — Enemies Left: {currentEnemyCount}";
 	}
-
-	private void Awake()
-    {
-        UIManager.Instance?.RegisterSceneUI(this);
-    }
 
     public void ShowGameOver()
     {

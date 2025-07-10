@@ -1,4 +1,4 @@
-public interface ISceneUI
+public interface IGameSceneUI
 {
     void ShowGameOver();
     void ShowGameWin();

@@ -1,55 +1,56 @@
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
-    public static UIManager Instance { get; private set; }
+    private IGameSceneUI currentGameSceneUI;
+    private IMainMenuUI currentMainMenuUI;
 
-    private void Awake()
+    public void RegisterSceneUI(IGameSceneUI sceneUI)
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        currentGameSceneUI = sceneUI;
     }
-
-    private ISceneUI currentSceneUI;
-
-    public void RegisterSceneUI(ISceneUI sceneUI)
+    
+    public void RegisterMainMenuUI(IMainMenuUI sceneUI)
     {
-        currentSceneUI = sceneUI;
+		currentMainMenuUI = sceneUI;
     }
 
     public void ShowGameOver()
     {
-        currentSceneUI?.ShowGameOver();
+        currentGameSceneUI?.ShowGameOver();
     }
     
     public void ShowGameWin()
     {
-        currentSceneUI?.ShowGameWin();
+        currentGameSceneUI?.ShowGameWin();
     }
 
     public void HideGameOver()
     {
-        currentSceneUI?.HideGameOver();
+        currentGameSceneUI?.HideGameOver();
     } 
     
     public void HideGameWin()
     {
-        currentSceneUI?.HideGameWin();
+        currentGameSceneUI?.HideGameWin();
     }
 
 	public void SetWaveText(int wave)
 	{
-		currentSceneUI?.SetWave(wave); // ISceneUI supports SetWave()
+		currentGameSceneUI?.SetWave(wave); // ISceneUI supports SetWave()
 	}
 	public void SetEnemyCount(int count)
 	{
-		currentSceneUI?.SetEnemyCount(count);
+		currentGameSceneUI?.SetEnemyCount(count);
 	}
+
+	public void ShowGameModePanel() => currentMainMenuUI.ShowGameModeUI();
+	public void ShowCreateRoomPanel() => currentMainMenuUI.ShowCreateRoomUI();
+	public void ShowJoinRoomPanel() => currentMainMenuUI.ShowGameModeUI();
+	public void ShowMultiplayerModeUI() => currentMainMenuUI.ShowGameModeUI();
+	public void ShowLobbyUI() => currentMainMenuUI.ShowGameModeUI();
+	public void HideAllPanels() => currentMainMenuUI.HideAllPanels();
+
 
 	// Add more methods as needed (Pause, Fade, Victory)
 }
