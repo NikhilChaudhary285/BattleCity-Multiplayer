@@ -46,9 +46,9 @@ public class UIManager : Singleton<UIManager>
 
 	public void ShowGameModePanel() => currentMainMenuUI.ShowGameModeUI();
 	public void ShowCreateRoomPanel() => currentMainMenuUI.ShowCreateRoomUI();
-	public void ShowJoinRoomPanel() => currentMainMenuUI.ShowGameModeUI();
-	public void ShowMultiplayerModeUI() => currentMainMenuUI.ShowGameModeUI();
-	public void ShowLobbyUI() => currentMainMenuUI.ShowGameModeUI();
+	public void ShowJoinRoomPanel() => currentMainMenuUI.ShowJoinRoomUI();
+	public void ShowMultiplayerPanel() => currentMainMenuUI.ShowMultiplayerModeUI();
+	public void ShowShareRoomPanel() => currentMainMenuUI.ShowShareRoomLobbyUI();
 	public void HideAllPanels() => currentMainMenuUI.HideAllPanels();
 
 

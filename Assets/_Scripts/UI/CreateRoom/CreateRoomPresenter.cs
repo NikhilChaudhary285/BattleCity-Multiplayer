@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class CreateRoomPresenter : IPresenter
 {
 	private CreateRoomUI view;
@@ -29,8 +31,42 @@ public class CreateRoomPresenter : IPresenter
 		view.SetStatus($"Creating room: {roomName} for {playerCount} players...");
 	}
 
+	#region ---- SelectPlayerCount Functionality ----
+
+	public void SelectPlayerCount(int count)
+	{
+		Debug.Log($"[MultiplayerModePresenter] Selected {count}-Player Room");
+		GameMode gameMode = GetGameModeForPlayerCount(count);
+		GameSettingsManager.Instance.SetMode(gameMode, count);
+		UIManager.Instance.ShowCreateRoomPanel(); // or join room logic
+	}
+	private GameMode GetGameModeForPlayerCount(int count)
+	{
+		GameMode mode = GameSettingsManager.Instance.settings.selectedGameMode;
+		switch (count)
+		{
+			case 1:
+				mode = GameMode.SinglePlayer;
+				break;
+			case 2:
+				mode = GameMode.Multiplayer2P;
+				break;
+			case 3:
+				mode = GameMode.Multiplayer3P;
+				break;
+			case 4:
+				mode = GameMode.Multiplayer4P;
+				break;
+			default:
+				mode = GameMode.SinglePlayer;
+				break;
+		}
+		return mode;
+	}
+	#endregion ---- SelectPlayerCount Functionality ----
+
 	public void GoBack()
 	{
-		UIManager.Instance.ShowMultiplayerModeUI();
+		UIManager.Instance.ShowMultiplayerPanel();
 	}
 }

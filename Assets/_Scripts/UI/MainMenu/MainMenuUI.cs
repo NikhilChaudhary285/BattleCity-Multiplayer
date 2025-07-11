@@ -7,11 +7,12 @@ public class MainMenuUI : MonoBehaviour, IMainMenuUI
 	[SerializeField] private MultiplayerModeUI multiplayerModeUI;
 	[SerializeField] private CreateRoomUI createRoomUI;
 	[SerializeField] private JoinRoomUI joinRoomUI;
-	[SerializeField] private ShareRoomLobbyUI lobbyUI;
+	[SerializeField] private ShareRoomLobbyUI shareRoomLobbyUI;
 
 	private void Awake()
 	{
 		UIManager.Instance?.RegisterMainMenuUI(this);
+		UIManager.Instance.ShowGameModePanel();
 	}
 
 	public void ShowGameModeUI() // CHOOSE GAME MODE 
@@ -38,7 +39,7 @@ public class MainMenuUI : MonoBehaviour, IMainMenuUI
 		joinRoomUI.Show();
 	}
 
-	public void ShowMultiplayerModeUI() // CREATE ROOM WITH PLAYER COUNT
+	public void ShowMultiplayerModeUI() // CREATE AND JOIN ROOM
 	{
 		HideAllPanels();
 		DisposeAll();
@@ -46,12 +47,12 @@ public class MainMenuUI : MonoBehaviour, IMainMenuUI
 		multiplayerModeUI.Show();
 	}
 
-	public void ShowLobbyUI() // SHOW PLAYER LIST
+	public void ShowShareRoomLobbyUI() // SHOW PLAYER LIST
 	{
 		HideAllPanels();
 		DisposeAll();
-		lobbyUI.Initialize();
-		lobbyUI.Show();
+		shareRoomLobbyUI.Initialize();
+		shareRoomLobbyUI.Show();
 	}
 
 	public void HideAllPanels() // HIDE ALL PANELS 
@@ -60,7 +61,7 @@ public class MainMenuUI : MonoBehaviour, IMainMenuUI
 		multiplayerModeUI?.Hide();
 		createRoomUI?.Hide();
 		joinRoomUI?.Hide();
-		lobbyUI?.Hide();
+		shareRoomLobbyUI?.Hide();
 	}
 
 	public void DisposeAll()
@@ -69,6 +70,6 @@ public class MainMenuUI : MonoBehaviour, IMainMenuUI
 		multiplayerModeUI?.Dispose();
 		createRoomUI?.Dispose();
 		joinRoomUI?.Dispose();
-		lobbyUI?.Dispose();
+		shareRoomLobbyUI?.Dispose();
 	}
 }

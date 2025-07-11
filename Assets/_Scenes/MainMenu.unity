@@ -6703,8 +6703,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomNameInput: {fileID: 1748194114}
   statusText: {fileID: 6471166619314919201}
-  joinButton: {fileID: 1739340194}
-  backButton: {fileID: 2061099903392688197}
+  joinButton: {fileID: 2061099903392688197}
+  backButton: {fileID: 1739340194}
 --- !u!1 &1721007753
 GameObject:
   m_ObjectHideFlags: 0
@@ -12961,7 +12961,6 @@ GameObject:
   - component: {fileID: 8965883738718261083}
   - component: {fileID: 5661708791514392693}
   - component: {fileID: 8965883738718261084}
-  - component: {fileID: 8965883738718261085}
   m_Layer: 5
   m_Name: MainMenuUICanvas
   m_TagString: Untagged
@@ -13965,28 +13964,7 @@ MonoBehaviour:
   multiplayerModeUI: {fileID: 561092629}
   createRoomUI: {fileID: 107921747}
   joinRoomUI: {fileID: 1701698177}
-  lobbyUI: {fileID: 0}
---- !u!114 &8965883738718261085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7039977785141695255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dad8fcc07681264ea51d918461b6a67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomNameText: {fileID: 0}
-  playerListText: {fileID: 0}
-  statusText: {fileID: 0}
-  FriendRoomShareContainer: {fileID: 0}
-  FriendRoomSharePrefab: {fileID: 0}
-  JoinedFriendsListContainer: {fileID: 0}
-  JoinedFriendPrefab: {fileID: 0}
-  startGameButton: {fileID: 0}
-  leaveButton: {fileID: 1334794113}
+  shareRoomLobbyUI: {fileID: 1556979744}
 --- !u!114 &8996132240604234782
 MonoBehaviour:
   m_ObjectHideFlags: 0

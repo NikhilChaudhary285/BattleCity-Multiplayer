@@ -23,9 +23,9 @@ public class GameManager : Singleton<GameManager>
 	private void Start()
 	{
 		CurrentStateType = GameState.Paused;
-		//SetState(GameState.Init); // Transition to Init state: To Setup Managers (Audio, Game, UI) and more (whatever needed) 
+		SetState(GameState.Init); // Transition to Init state: To Setup Managers (Audio, Game, UI) and more (whatever needed) 
 		// While Development we can use this just to not start game from init state while making project for time saving
-		SetState(GameState.MainMenu);  // Transition to MainMenu state: To Start menu logic or preload (if needed) 
+		//SetState(GameState.MainMenu);  // Transition to MainMenu state: To Start menu logic or preload (if needed) 
 
 		GameMode mode = GameSettingsManager.Instance.settings.selectedGameMode;
 		switch (mode)

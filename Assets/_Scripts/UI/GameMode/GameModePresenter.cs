@@ -31,7 +31,7 @@ public class GameModePresenter : IPresenter
 	public void OnClickOnline()
 	{
 		Debug.Log("[GameModePresenter] Online mode selected.");
-		UIManager.Instance.ShowMultiplayerModeUI(); // next panel
+		UIManager.Instance.ShowMultiplayerPanel(); // next panel
 	}
 
 	public void GoBack()

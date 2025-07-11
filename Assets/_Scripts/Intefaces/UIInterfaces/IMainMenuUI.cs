@@ -4,6 +4,6 @@ public interface IMainMenuUI
 	void ShowCreateRoomUI();
 	void ShowJoinRoomUI();
 	void ShowMultiplayerModeUI();
-	void ShowLobbyUI();
+	void ShowShareRoomLobbyUI();
 	void HideAllPanels();
 }

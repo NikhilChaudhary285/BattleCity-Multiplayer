@@ -21,11 +21,10 @@ public class CreateRoomUI : MonoBehaviour, IView
 	{
 		presenter = new CreateRoomPresenter(this);
 
-		onePlayerButton.onClick.AddListener(() => ((MultiplayerModePresenter)presenter).SelectPlayerCount(1));
-		twoPlayerButton.onClick.AddListener(() => ((MultiplayerModePresenter)presenter).SelectPlayerCount(2));
-		threePlayerButton.onClick.AddListener(() => ((MultiplayerModePresenter)presenter).SelectPlayerCount(3));
-		fourPlayerButton.onClick.AddListener(() => ((MultiplayerModePresenter)presenter).SelectPlayerCount(4));
-		backButton.onClick.AddListener(() => ((MultiplayerModePresenter)presenter).GoBack());
+		onePlayerButton.onClick.AddListener(() => ((CreateRoomPresenter)presenter).SelectPlayerCount(1));
+		twoPlayerButton.onClick.AddListener(() => ((CreateRoomPresenter)presenter).SelectPlayerCount(2));
+		threePlayerButton.onClick.AddListener(() => ((CreateRoomPresenter)presenter).SelectPlayerCount(3));
+		fourPlayerButton.onClick.AddListener(() => ((CreateRoomPresenter)presenter).SelectPlayerCount(4));
 		createButton.onClick.AddListener(() => ((CreateRoomPresenter)presenter).CreateRoom(roomNameInput.text));
 		backButton.onClick.AddListener(() => ((CreateRoomPresenter)presenter).GoBack());
 	}

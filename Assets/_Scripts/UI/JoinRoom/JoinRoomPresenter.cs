@@ -11,6 +11,7 @@ public class JoinRoomPresenter : IPresenter
 	public void Initialize()
 	{
 		view.SetStatus("Enter Room name to join the match");
+
 	}
 
 	public void Dispose() { }
@@ -29,6 +30,6 @@ public class JoinRoomPresenter : IPresenter
 
 	public void GoBack()
 	{
-		UIManager.Instance.ShowMultiplayerModeUI();
+		UIManager.Instance.ShowMultiplayerPanel();
 	}
 }

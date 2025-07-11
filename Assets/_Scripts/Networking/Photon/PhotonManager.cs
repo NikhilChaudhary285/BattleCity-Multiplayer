@@ -61,8 +61,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 	public void JoinRoom(string roomName)
 	{
-		PhotonNetwork.JoinRoom(roomName);
-		GameSettingsManager.Instance.SetRoomName(roomName);
+		var joinRoomSuccess = PhotonNetwork.JoinRoom(roomName);
+		if(joinRoomSuccess) GameSettingsManager.Instance.SetRoomName(roomName);
 	}
 
 	public void LeaveRoom()
@@ -83,7 +83,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	public override void OnJoinedRoom()
 	{
 		Debug.Log("✅ Joined Room: " + PhotonNetwork.CurrentRoom.Name);
-		UIManager.Instance.ShowLobbyUI();
+		UIManager.Instance.ShowShareRoomPanel();
 		OnPlayerListUpdated?.Invoke();
 	}
 
