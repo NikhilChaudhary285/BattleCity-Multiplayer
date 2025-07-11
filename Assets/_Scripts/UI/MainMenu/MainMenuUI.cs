@@ -7,7 +7,7 @@ public class MainMenuUI : MonoBehaviour, IMainMenuUI
 	[SerializeField] private MultiplayerModeUI multiplayerModeUI;
 	[SerializeField] private CreateRoomUI createRoomUI;
 	[SerializeField] private JoinRoomUI joinRoomUI;
-	[SerializeField] private LobbyUI lobbyUI;
+	[SerializeField] private ShareRoomLobbyUI lobbyUI;
 
 	private void Awake()
 	{
