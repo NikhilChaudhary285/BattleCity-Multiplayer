@@ -53,21 +53,28 @@ public class ShareRoomLobbyPresenter : IPresenter
 	{
 		view.ToggleJoinedComradesContainerByPlayerCount(PhotonNetwork.PlayerList.Length);
 
-		List<JoinedRoomFriendData> joinedRoomFriendDataList = new List<JoinedRoomFriendData>();
+		List<JoinedRoomFriendData> joinedRoomFriendDataList = new();
 
 		foreach (var player in PhotonNetwork.PlayerList)
 		{
-			JoinedRoomFriendData data = new JoinedRoomFriendData
-			{
-				userName = player.NickName,
-				wins = 0,
-				userProfile = null
-			};
+			string name = string.IsNullOrWhiteSpace(player.NickName)
+				? $"User_{Random.Range(1000, 9999)}"
+				: player.NickName;
 
-			joinedRoomFriendDataList.Add(data);
+			Sprite profileSprite = (view.UserProfileSprites != null && view.UserProfileSprites.Length > 0)
+				? view.UserProfileSprites[Random.Range(0, view.UserProfileSprites.Length)]
+				: null;
+
+			joinedRoomFriendDataList.Add(new JoinedRoomFriendData
+			{
+				userName = name,
+				wins = 0,
+				userProfile = profileSprite
+			});
 		}
 
 		view.SetPlayerList(joinedRoomFriendDataList);
+
 	}
 
 	private void UpdatePlayerListStatus()

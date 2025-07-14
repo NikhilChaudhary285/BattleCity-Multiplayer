@@ -8,6 +8,7 @@ public class CreateRoomPresenter : IPresenter
 	{
 		this.view = view;
 		Initialize();
+		PhotonManager.Instance.OnCreateRoomFailedCallback += OnCreateRoomFailed;
 	}
 
 	public void Initialize()
@@ -15,7 +16,10 @@ public class CreateRoomPresenter : IPresenter
 		view.SetStatus("Enter Room name to create the match");
 	}
 
-	public void Dispose() { }
+	public void Dispose()
+	{
+		PhotonManager.Instance.OnCreateRoomFailedCallback -= OnCreateRoomFailed;
+	}
 
 	public void CreateRoom(string roomName)
 	{
@@ -64,6 +68,11 @@ public class CreateRoomPresenter : IPresenter
 		return mode;
 	}
 	#endregion ---- SelectPlayerCount Functionality ----
+
+	public void OnCreateRoomFailed(string errorMessage)
+	{
+		view.SetStatus($"Room creation failed: {errorMessage}");
+	}
 
 	public void GoBack()
 	{

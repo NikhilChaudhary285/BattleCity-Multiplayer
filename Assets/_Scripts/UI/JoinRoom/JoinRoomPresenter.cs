@@ -6,15 +6,18 @@ public class JoinRoomPresenter : IPresenter
 	{
 		this.view = view;
 		Initialize();
+		PhotonManager.Instance.OnJoinRoomFailedCallback += OnJoinRoomFailed;
 	}
 
 	public void Initialize()
 	{
 		view.SetStatus("Enter Room name to join the match");
-
 	}
 
-	public void Dispose() { }
+	public void Dispose() 
+	{
+		PhotonManager.Instance.OnJoinRoomFailedCallback -= OnJoinRoomFailed;
+	}
 
 	public void JoinRoom(string roomName)
 	{
@@ -26,6 +29,11 @@ public class JoinRoomPresenter : IPresenter
 
 		PhotonManager.Instance.JoinRoom(roomName);
 		view.SetStatus($"Joining room: {roomName}...");
+	}
+
+	public void OnJoinRoomFailed(string errorMessage)
+	{
+		view.SetStatus($"Join failed: {errorMessage}");
 	}
 
 	public void GoBack()

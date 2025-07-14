@@ -304,11 +304,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b319d0110f52d694680c495285335a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 6845266356057262605}
   bodyRenderer: {fileID: 8517767631382167638}
   upperPartBodyRenderer: {fileID: 7002414445641534892}
   modelData: {fileID: 11400000, guid: d200b89fe7f197f41aa481047108e998, type: 2}
   view: {fileID: 8791248242201880614}
+  health: {fileID: 6845266356057262605}
 --- !u!114 &6845266356057262605
 MonoBehaviour:
   m_ObjectHideFlags: 0

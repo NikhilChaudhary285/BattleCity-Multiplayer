@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2777445659930458127}
   - component: {fileID: 1906687335358742135}
   - component: {fileID: 8430172024508758234}
+  - component: {fileID: -2603881430064051973}
   m_Layer: 5
   m_Name: JoinedFriendContent
   m_TagString: Untagged
@@ -78,6 +79,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-2603881430064051973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456684329034828372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a972e55899e56e47927fa3a71bc212e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userName_Text: {fileID: 5108074603307971607}
+  wins_Text: {fileID: 5389544935221417760}
+  userProfile_Sprite: {fileID: 8607333326254287037}
 --- !u!1 &2402491762535823196
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +653,7 @@ GameObject:
   - component: {fileID: 8607333326254287037}
   - component: {fileID: 3750336064124378034}
   m_Layer: 5
-  m_Name: SRContentItemDP_image
+  m_Name: SR_ContentItemDP_image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -690,7 +706,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1b66504bec015b2478c2ecd88333de2d, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

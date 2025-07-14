@@ -21,6 +21,9 @@ public class ShareRoomLobbyUI : MonoBehaviour, IView
 	[SerializeField] private RectTransform JoinedFriendsListContainer;
 	[SerializeField] private RectTransform NoComradesYet_Container;
 	[SerializeField] private GameObject JoinedFriendPrefab;
+	[Header("UserProfileSprites")]
+	[SerializeField] private Sprite[] userProfileSprites;
+	public Sprite[] UserProfileSprites { get => userProfileSprites; set => userProfileSprites = value; }
 
 	private IPresenter presenter;
 
@@ -64,11 +67,19 @@ public class ShareRoomLobbyUI : MonoBehaviour, IView
 		// Instantiate new friend entries
 		foreach (JoinedRoomFriendData joinedRoomFriend in joinedRoomFriends)
 		{
-			GameObject roomFriend = Instantiate(FriendRoomSharePrefab, JoinedFriendsListContainer);
-			// Set roomFriend data on the prefab (e.g., username, wins, userprofile etc.)
-			roomFriend.GetComponent<Friend>().userName_Text.text = joinedRoomFriend.userName;
-			roomFriend.GetComponent<Friend>().wins_Text.text = joinedRoomFriend.wins.ToString();
-			roomFriend.GetComponent<Friend>().userProfile_Sprite = joinedRoomFriend.userProfile;
+			GameObject roomFriend = Instantiate(JoinedFriendPrefab, JoinedFriendsListContainer);
+
+			if (roomFriend.TryGetComponent(out Friend friend))
+			{
+				friend.userName_Text.text = joinedRoomFriend.userName;
+				friend.wins_Text.text = $"Wins: {joinedRoomFriend.wins}";
+				if (joinedRoomFriend.userProfile != null)
+					friend.userProfile_Sprite.sprite = joinedRoomFriend.userProfile;
+			}
+			else
+			{
+				Debug.LogWarning("Friend component not found on FriendRoomSharePrefab.");
+			}
 		}
 	}
 

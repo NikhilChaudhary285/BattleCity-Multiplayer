@@ -11,6 +11,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	[SerializeField] private PhotonAppConfig config;
 
 	public static event Action OnPlayerListUpdated;
+	public Action<string> OnJoinRoomFailedCallback;
+	public Action<string> OnCreateRoomFailedCallback;
 
 	public bool IsConnectedToMaster => PhotonNetwork.IsConnectedAndReady;
 
@@ -44,6 +46,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	public override void OnConnectedToMaster()
 	{
 		Debug.Log("✅ Connected to Photon Master Server");
+		if (string.IsNullOrWhiteSpace(PhotonNetwork.NickName))
+		{
+			PhotonNetwork.NickName = $"Tank_{UnityEngine.Random.Range(1, 999)}";
+		}
+
 		JoinLobby();
 	}
 
@@ -61,8 +68,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
 	public void JoinRoom(string roomName)
 	{
-		var joinRoomSuccess = PhotonNetwork.JoinRoom(roomName);
-		if(joinRoomSuccess) GameSettingsManager.Instance.SetRoomName(roomName);
+		PhotonNetwork.JoinRoom(roomName);
+		GameSettingsManager.Instance.SetRoomName(roomName);
 	}
 
 	public void LeaveRoom()
@@ -102,11 +109,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 	public override void OnCreateRoomFailed(short returnCode, string message)
 	{
 		Debug.LogError("Room creation failed: " + message);
+		OnCreateRoomFailedCallback?.Invoke(message);
 	}
 
 	public override void OnJoinRoomFailed(short returnCode, string message)
 	{
 		Debug.LogError("Join room failed: " + message);
+		OnJoinRoomFailedCallback?.Invoke(message);
 	}
 
 	public override void OnDisconnected(DisconnectCause cause)
