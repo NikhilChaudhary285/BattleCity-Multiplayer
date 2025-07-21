@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
@@ -77,12 +78,44 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 		PhotonNetwork.LeaveRoom();
 	}
 
+	public IEnumerator ReloadSceneAfterDelay(float delay, Scene scene)
+	{
+		yield return new WaitForSecondsRealtime(delay); // realtime ignores Time.timeScale = 0
+
+		Time.timeScale = 1f; // Reset in case it was paused/frozen
+
+		switch (scene)
+		{
+			case Scene.MainMenu:
+				PhotonNetwork.LoadLevel(Scene.MainMenu.ToString());
+				break;
+
+			case Scene.GamePlay:
+				PhotonNetwork.LoadLevel(Scene.GamePlay.ToString());
+				break;
+
+			default:
+				Debug.LogWarning("Unhandled scene type: " + scene);
+				break;
+		}
+	}
+
 	public void LoadGameplayForAll()
 	{
 		if (PhotonNetwork.IsMasterClient)
 		{
-			SceneLoader.Instance.LoadGame(); // Gameplay scene
+			PhotonNetwork.LoadLevel(Scene.GamePlay.ToString()); // Gameplay scene
 		}
+	}
+
+	public void LoadGameplay()
+	{
+		PhotonNetwork.LoadLevel(Scene.GamePlay.ToString()); // Gameplay scene
+	}
+
+	public void LoadMainMenu()
+	{
+		PhotonNetwork.LoadLevel(Scene.MainMenu.ToString()); // Gameplay scene
 	}
 
 	// ─────────────── CALLBACKS ───────────────

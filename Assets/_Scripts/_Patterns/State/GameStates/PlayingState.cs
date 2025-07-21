@@ -5,8 +5,8 @@ public class PlayingState : IGameState
 	public void EnterState(GameManager gameManager)
 	{
 		Debug.Log("State: Playing");
+		PhotonManager.Instance.ReloadSceneAfterDelay(2f, Scene.GamePlay);
 
-		SceneLoader.Instance.StartCoroutine(SceneLoader.Instance.ReloadSceneAfterDelay(2f, Scene.GamePlay));
 		Time.timeScale = 1f;
 	}
 

@@ -35,7 +35,7 @@ public class ShareRoomLobbyPresenter : IPresenter
 			return;
 		}
 
-		PhotonManager.Instance.LoadGameplayForAll();
+		PhotonManager.Instance.LoadGameplayForAll(); // load gameplay scene for all
 	}
 
 	public void LeaveRoom()

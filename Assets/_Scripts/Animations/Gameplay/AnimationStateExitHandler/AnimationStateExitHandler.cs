@@ -1,5 +1,6 @@
-using UnityEngine;
+using Photon.Pun;
 using System;
+using UnityEngine;
 using static GameManager;
 
 public class AnimationStateExitHandler : MonoBehaviour
@@ -39,11 +40,14 @@ public class AnimationStateExitHandler : MonoBehaviour
 
 			if (reloadGameplayScene)
 			{
-                SceneLoader.Instance.LoadMainMenu();
-                GameManager.Instance.SetState(GameState.MainMenu); // Transition to MainMenu state: To Start menu logic or preload (if needed) 
-            }				
+				// Leave Current Room and Return To Master Server To Join || Create Room
+				PhotonManager.Instance.LeaveRoom();
+				PhotonManager.Instance.LoadMainMenu();
+				// Transition to MainMenu state: To Start menu logic or preload (if needed) 
+				GameManager.Instance.SetState(GameState.MainMenu);
+			}
 
-            if (OnAnimationComplete != null)
+			if (OnAnimationComplete != null)
 				OnAnimationComplete.Invoke();
 		}
 	}

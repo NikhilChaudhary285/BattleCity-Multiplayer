@@ -25,7 +25,7 @@ public class GameModePresenter : IPresenter
 		Debug.Log("[GameModePresenter] Offline mode selected.");
 		GameSettingsManager.Instance.SetMode(GameMode.SinglePlayer, 1);
 
-		SceneLoader.Instance.LoadGame(); // load gameplay scene
+		PhotonManager.Instance.LoadGameplay(); // load gameplay scene
 	}
 
 	public void OnClickOnline()
