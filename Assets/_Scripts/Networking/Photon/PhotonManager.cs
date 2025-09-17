@@ -3,156 +3,168 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using UnityEngine;
+using ExitGames.Client.Photon; // for Photon hashtable
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-	public static PhotonManager Instance { get; private set; }
+    public static PhotonManager Instance { get; private set; }
 
-	[Header("Photon Config")]
-	[SerializeField] private PhotonAppConfig config;
+    public void SetPlayerReady(bool ready)
+    {
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable { { "isReady", ready } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+    }
 
-	public static event Action OnPlayerListUpdated;
-	public Action<string> OnJoinRoomFailedCallback;
-	public Action<string> OnCreateRoomFailedCallback;
+    [Header("Photon Config")]
+    [SerializeField] private PhotonAppConfig config;
 
-	public bool IsConnectedToMaster => PhotonNetwork.IsConnectedAndReady;
+    public static event Action OnPlayerListUpdated;
+    public Action<string> OnJoinRoomFailedCallback;
+    public Action<string> OnCreateRoomFailedCallback;
 
-	private void Awake()
-	{
-		if (Instance != null && Instance != this)
-		{
-			Destroy(gameObject);
-			return;
-		}
+    public bool IsConnectedToMaster => PhotonNetwork.IsConnectedAndReady;
 
-		Instance = this;
-		DontDestroyOnLoad(this);
-	}
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-	private void Start()
-	{
-		ConnectToPhotonServer();
-	}
+        Instance = this;
+        DontDestroyOnLoad(this);
+    }
 
-	public void ConnectToPhotonServer()
-	{
-		PhotonNetwork.AutomaticallySyncScene = true;
-		PhotonNetwork.GameVersion = config.gameVersion;
+    private void Start()
+    {
+        ConnectToPhotonServer();
+    }
 
-		PhotonNetwork.ConnectUsingSettings();
+    public void ConnectToPhotonServer()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.GameVersion = config.gameVersion;
 
-		Debug.Log($"Connecting to Photon... [v{config.gameVersion}]");
-	}
+        PhotonNetwork.ConnectUsingSettings();
 
-	public override void OnConnectedToMaster()
-	{
-		Debug.Log("✅ Connected to Photon Master Server");
-		if (string.IsNullOrWhiteSpace(PhotonNetwork.NickName))
-		{
-			PhotonNetwork.NickName = $"Tank_{UnityEngine.Random.Range(1, 999)}";
-		}
+        Debug.Log($"Connecting to Photon... [v{config.gameVersion}]");
+    }
 
-		JoinLobby();
-	}
+    public override void OnConnectedToMaster()
+    {
+        Debug.Log("✅ Connected to Photon Master Server");
+        if (string.IsNullOrWhiteSpace(PhotonNetwork.NickName))
+        {
+            PhotonNetwork.NickName = $"Tank_{UnityEngine.Random.Range(1, 999)}";
+        }
 
-	private void JoinLobby()
-	{
-		PhotonNetwork.JoinLobby();
-	}
+        JoinLobby();
+    }
 
-	public void CreateRoom(string roomName, int maxPlayers)
-	{
-		RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayers };
-		PhotonNetwork.CreateRoom(roomName, options);
-		GameSettingsManager.Instance.SetRoomName(roomName);
-	}
+    private void JoinLobby()
+    {
+        PhotonNetwork.JoinLobby();
+    }
 
-	public void JoinRoom(string roomName)
-	{
-		PhotonNetwork.JoinRoom(roomName);
-		GameSettingsManager.Instance.SetRoomName(roomName);
-	}
+    public void CreateRoom(string roomName, int maxPlayers)
+    {
+        RoomOptions options = new RoomOptions { MaxPlayers = (byte)maxPlayers };
+        PhotonNetwork.CreateRoom(roomName, options);
+        GameSettingsManager.Instance.SetRoomName(roomName);
+    }
 
-	public void LeaveRoom()
-	{
-		PhotonNetwork.LeaveRoom();
-	}
+    public void JoinRoom(string roomName)
+    {
+        PhotonNetwork.JoinRoom(roomName);
+        GameSettingsManager.Instance.SetRoomName(roomName);
+    }
 
-	public IEnumerator ReloadSceneAfterDelay(float delay, Scene scene)
-	{
-		yield return new WaitForSecondsRealtime(delay); // realtime ignores Time.timeScale = 0
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+        UIManager.Instance.ShowMultiplayerPanel();
+    }
 
-		Time.timeScale = 1f; // Reset in case it was paused/frozen
+    public IEnumerator ReloadSceneAfterDelay(float delay, Scene scene)
+    {
+        yield return new WaitForSecondsRealtime(delay); // Realtime ignores Time.timeScale = 0
 
-		switch (scene)
-		{
-			case Scene.MainMenu:
-				PhotonNetwork.LoadLevel(Scene.MainMenu.ToString());
-				break;
+        Time.timeScale = 1f; // Reset in case it was paused/frozen
 
-			case Scene.GamePlay:
-				PhotonNetwork.LoadLevel(Scene.GamePlay.ToString());
-				break;
+        switch (scene)
+        {
+            case Scene.MainMenu:
+                PhotonNetwork.LoadLevel(Scene.MainMenu.ToString());
+                break;
 
-			default:
-				Debug.LogWarning("Unhandled scene type: " + scene);
-				break;
-		}
-	}
+            case Scene.GamePlay:
+                PhotonNetwork.LoadLevel(Scene.GamePlay.ToString());
+                break;
 
-	public void LoadGameplayForAll()
-	{
-		if (PhotonNetwork.IsMasterClient)
-		{
-			PhotonNetwork.LoadLevel(Scene.GamePlay.ToString()); // Gameplay scene
-		}
-	}
+            default:
+                Debug.LogWarning("Unhandled scene type: " + scene);
+                break;
+        }
+    }
 
-	public void LoadGameplay()
-	{
-		PhotonNetwork.LoadLevel(Scene.GamePlay.ToString()); // Gameplay scene
-	}
+    public void LoadGameplayForAll()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(Scene.GamePlay.ToString()); // Gameplay scene
+        }
+    }
 
-	public void LoadMainMenu()
-	{
-		PhotonNetwork.LoadLevel(Scene.MainMenu.ToString()); // Gameplay scene
-	}
+    public void LoadGameplay()
+    {
+        PhotonNetwork.LoadLevel(Scene.GamePlay.ToString()); // Gameplay scene
+    }
 
-	// ─────────────── CALLBACKS ───────────────
+    public void LoadMainMenu()
+    {
+        PhotonNetwork.LoadLevel(Scene.MainMenu.ToString()); // Mainmenu scene
+    }
 
-	public override void OnJoinedRoom()
-	{
-		Debug.Log("✅ Joined Room: " + PhotonNetwork.CurrentRoom.Name);
-		UIManager.Instance.ShowShareRoomPanel();
-		OnPlayerListUpdated?.Invoke();
-	}
+    // ─────────────── CALLBACKS ───────────────
 
-	public override void OnPlayerEnteredRoom(Player newPlayer)
-	{
-		Debug.Log("👤 Player Joined: " + newPlayer.NickName);
-		OnPlayerListUpdated?.Invoke();
-	}
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("✅ Joined Room: " + PhotonNetwork.CurrentRoom.Name);
+        UIManager.Instance.ShowShareRoomPanel();
+        OnPlayerListUpdated?.Invoke();
+    }
 
-	public override void OnPlayerLeftRoom(Player otherPlayer)
-	{
-		Debug.Log("❌ Player Left: " + otherPlayer.NickName);
-		OnPlayerListUpdated?.Invoke();
-	}
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log("👤 Player Joined: " + newPlayer.NickName);
+        OnPlayerListUpdated?.Invoke();
+    }
 
-	public override void OnCreateRoomFailed(short returnCode, string message)
-	{
-		Debug.LogError("Room creation failed: " + message);
-		OnCreateRoomFailedCallback?.Invoke(message);
-	}
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log("❌ Player Left: " + otherPlayer.NickName);
+        OnPlayerListUpdated?.Invoke();
+    }
 
-	public override void OnJoinRoomFailed(short returnCode, string message)
-	{
-		Debug.LogError("Join room failed: " + message);
-		OnJoinRoomFailedCallback?.Invoke(message);
-	}
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.LogError("Room creation failed: " + message);
+        OnCreateRoomFailedCallback?.Invoke(message);
+    }
 
-	public override void OnDisconnected(DisconnectCause cause)
-	{
-		Debug.LogWarning($"❌ Disconnected from Photon: {cause}");
-	}
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.LogError("Join room failed: " + message);
+        OnJoinRoomFailedCallback?.Invoke(message);
+    }
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        OnPlayerListUpdated?.Invoke();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.LogWarning($"❌ Disconnected from Photon: {cause}");
+    }
 }

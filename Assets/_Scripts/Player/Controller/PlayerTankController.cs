@@ -1,6 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
+using Photon.Pun;
 
-public class PlayerTankController : MonoBehaviour
+public class PlayerTankController : MonoBehaviourPun
 {
     [Tooltip("Main body SpriteRenderer used to display the player's tank base sprite")]
     [SerializeField] private SpriteRenderer bodyRenderer;
@@ -44,6 +45,8 @@ public class PlayerTankController : MonoBehaviour
 
     private void OnEnable()
     {
+        if (photonView != null && !photonView.IsMine) return; // Only enable input for local player
+
         input.Enable();
 
         input.Gameplay.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
@@ -54,6 +57,8 @@ public class PlayerTankController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (photonView != null && !photonView.IsMine) return; // Prevent disabling input for remote players
+
         input.Disable();
     }
 
@@ -71,7 +76,6 @@ public class PlayerTankController : MonoBehaviour
         if (health != null)
             health.Init(this, Model.maxHealth);
 
-
         if (bodyRenderer != null && Model.tankSprite != null)
         {
             bodyRenderer.sprite = Model.tankSprite;
@@ -87,6 +91,8 @@ public class PlayerTankController : MonoBehaviour
 
     void Update()
     {
+        if (photonView != null && !photonView.IsMine) return; // Skip input & control for remote players
+
         float rotationInput = -moveInput.x;
         view.Move(GetCardinalDirection(moveInput));
         view.Rotate(rotationInput);
@@ -112,5 +118,4 @@ public class PlayerTankController : MonoBehaviour
             return new Vector2(Mathf.Sign(input.x), 0);
         }
     }
-
 }

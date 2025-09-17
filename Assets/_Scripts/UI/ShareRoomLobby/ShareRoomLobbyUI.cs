@@ -1,95 +1,103 @@
 using System.Collections.Generic;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShareRoomLobbyUI : MonoBehaviour, IView
-{ 
-	[Header("UI Elements")]
+{
+    [Header("UI Elements")]
 
-	[Header("ShareRoom UI")]
-	[SerializeField] private TMP_Text roomNameText;
-	[SerializeField] private Button startGameButton;
-	[SerializeField] private Button leaveButton;
-	[Header("ShareRoomFriends UI")]
-	[SerializeField] private RectTransform FriendRoomShareContainer;
-	[SerializeField] private RectTransform NoFriendsYetContainer;
-	[SerializeField] private GameObject FriendRoomSharePrefab;
-	[Header("JoinedRoomFriends UI")]
-	[SerializeField] private TMP_Text statusText;
-	[SerializeField] private RectTransform JoinedFriendsListContainer;
-	[SerializeField] private RectTransform NoComradesYet_Container;
-	[SerializeField] private GameObject JoinedFriendPrefab;
-	[Header("UserProfileSprites")]
-	[SerializeField] private Sprite[] userProfileSprites;
-	public Sprite[] UserProfileSprites { get => userProfileSprites; set => userProfileSprites = value; }
+    [Header("ShareRoom UI")]
+    [SerializeField] private TMP_Text roomNameText;
+    [SerializeField] private Button startGameButton;
+    [SerializeField] private Button leaveButton;
+    [Header("ShareRoomFriend Ready UI")]
+    [SerializeField] private Button readyButton;
+    [Header("ShareRoomFriends UI")]
+    [SerializeField] private RectTransform FriendRoomShareContainer;
+    [SerializeField] private RectTransform NoFriendsYetContainer;
+    [SerializeField] private GameObject FriendRoomSharePrefab;
+    [Header("JoinedRoomFriends UI")]
+    [SerializeField] private TMP_Text statusText;
+    [SerializeField] private RectTransform JoinedFriendsListContainer;
+    [SerializeField] private RectTransform NoComradesYet_Container;
+    [SerializeField] private GameObject JoinedFriendPrefab;
+    [Header("UserProfileSprites")]
+    [SerializeField] private Sprite[] userProfileSprites;
+    public Sprite[] UserProfileSprites { get => userProfileSprites; set => userProfileSprites = value; }
 
-	private IPresenter presenter;
+    private IPresenter presenter;
 
-	public void Initialize()
-	{
-		presenter = new ShareRoomLobbyPresenter(this);
+    public void Initialize()
+    {
+        presenter = new ShareRoomLobbyPresenter(this);
 
-		startGameButton.onClick.AddListener(() => ((ShareRoomLobbyPresenter)presenter).StartGame());
-		leaveButton.onClick.AddListener(() => ((ShareRoomLobbyPresenter)presenter).LeaveRoom());
-	}
+        startGameButton.onClick.AddListener(() => ((ShareRoomLobbyPresenter)presenter).StartGame());
+        readyButton.onClick.AddListener(() => ((ShareRoomLobbyPresenter)presenter).ToggleReady());
+        leaveButton.onClick.AddListener(() => ((ShareRoomLobbyPresenter)presenter).LeaveRoom());
+    }
 
-	public void Dispose()
-	{
-		startGameButton.onClick.RemoveAllListeners();
-		leaveButton.onClick.RemoveAllListeners();
-	}
+    public void Dispose()
+    {
+        startGameButton.onClick.RemoveAllListeners();
+        leaveButton.onClick.RemoveAllListeners();
+    }
 
-	public void Show() => gameObject.SetActive(true);
-	public void Hide() => gameObject.SetActive(false);
-	public void ToggleJoinedComradesContainerByPlayerCount(int PlayerCount)
-	{
-		bool hasPlayers = PlayerCount > 0;
+    public void Show() => gameObject.SetActive(true);
+    public void Hide() => gameObject.SetActive(false);
+    public void ToggleJoinedComradesContainerByPlayerCount(int PlayerCount)
+    {
+        bool hasPlayers = PlayerCount > 0;
 
-		NoComradesYet_Container.gameObject.SetActive(!hasPlayers);
-		JoinedFriendsListContainer.gameObject.SetActive(hasPlayers);
-	}
+        NoComradesYet_Container.gameObject.SetActive(!hasPlayers);
+        JoinedFriendsListContainer.gameObject.SetActive(hasPlayers);
+    }
 
-	public void SetRoomName(string roomName)
-	{
-		roomNameText.text = $"Room: {roomName}";
-	}
+    public void SetRoomName(string roomName)
+    {
+        roomNameText.text = $"Room: {roomName}";
+    }
 
-	public void SetPlayerList(List<JoinedRoomFriendData> joinedRoomFriends)
-	{
-		// Clear previous children from the container
-		foreach (Transform child in JoinedFriendsListContainer.transform)
-		{
-			Destroy(child.gameObject);
-		}
+    public void SetPlayerList(List<JoinedRoomFriendData> joinedRoomFriends)
+    {
+        // Clear previous children from the container
+        foreach (Transform child in JoinedFriendsListContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
 
-		// Instantiate new friend entries
-		foreach (JoinedRoomFriendData joinedRoomFriend in joinedRoomFriends)
-		{
-			GameObject roomFriend = Instantiate(JoinedFriendPrefab, JoinedFriendsListContainer);
+        // Instantiate new friend entries
+        foreach (JoinedRoomFriendData joinedRoomFriend in joinedRoomFriends)
+        {
+            GameObject roomFriend = Instantiate(JoinedFriendPrefab, JoinedFriendsListContainer);
 
-			if (roomFriend.TryGetComponent(out Friend friend))
-			{
-				friend.userName_Text.text = joinedRoomFriend.userName;
-				friend.wins_Text.text = $"Wins: {joinedRoomFriend.wins}";
-				if (joinedRoomFriend.userProfile != null)
-					friend.userProfile_Sprite.sprite = joinedRoomFriend.userProfile;
-			}
-			else
-			{
-				Debug.LogWarning("Friend component not found on FriendRoomSharePrefab.");
-			}
-		}
-	}
+            if (roomFriend.TryGetComponent(out Friend friend))
+            {
+                friend.userName_Text.text = joinedRoomFriend.userName;
+                friend.wins_Text.text = $"Wins: {joinedRoomFriend.wins}";
+                if (joinedRoomFriend.userProfile != null)
+                    friend.userProfile_Sprite.sprite = joinedRoomFriend.userProfile;
+            }
+            else
+            {
+                Debug.LogWarning("Friend component not found on FriendRoomSharePrefab.");
+            }
+        }
+    }
 
-	public void SetStatus(string status)
-	{
-		statusText.text = status;
-	}
+    public void SetStatus(string status)
+    {
+        statusText.text = status;
+    }
 
-	public void SetStartButtonVisible(bool visible)
-	{
-		startGameButton.gameObject.SetActive(visible);
-	}
+    public void SetStartButtonVisible(bool visible)
+    {
+        startGameButton.gameObject.SetActive(visible);
+    }
+
+    public void SetReadyButtonVisible(bool visible)
+    {
+        readyButton.gameObject.SetActive(visible);
+    }
+
 }

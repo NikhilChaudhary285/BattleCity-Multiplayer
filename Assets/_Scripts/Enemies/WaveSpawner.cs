@@ -58,7 +58,7 @@ public class WaveSpawner : MonoBehaviour
     }
     private void Start()
     {
-        StartWaves(); // Playing State: Start Enemy SpawnWaves
+        //StartWaves(); // Playing State: Start Enemy SpawnWaves
     }
     public void StartWaves()
 	{
