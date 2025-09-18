@@ -3,7 +3,6 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using UnityEngine;
-using ExitGames.Client.Photon; // for Photon hashtable
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
@@ -98,8 +97,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
                 PhotonNetwork.LoadLevel(Scene.MainMenu.ToString());
                 break;
 
-            case Scene.GamePlay:
-                PhotonNetwork.LoadLevel(Scene.GamePlay.ToString());
+            case Scene.Gameplay:
+                PhotonNetwork.LoadLevel(Scene.Gameplay.ToString());
                 break;
 
             default:
@@ -112,18 +111,18 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel(Scene.GamePlay.ToString()); // Gameplay scene
+            PhotonNetwork.LoadLevel(Scene.Gameplay.ToString()); // Gameplay scene
         }
     }
 
     public void LoadGameplay()
     {
-        PhotonNetwork.LoadLevel(Scene.GamePlay.ToString()); // Gameplay scene
+        PhotonNetwork.LoadLevel(Scene.Gameplay.ToString()); // Gameplay scene
     }
 
     public void LoadMainMenu()
     {
-        PhotonNetwork.LoadLevel(Scene.MainMenu.ToString()); // Mainmenu scene
+        PhotonNetwork.LoadLevel(Scene.MainMenu.ToString()); // MainMenu scene
     }
 
     // ─────────────── CALLBACKS ───────────────
@@ -131,6 +130,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("✅ Joined Room: " + PhotonNetwork.CurrentRoom.Name);
+        LogPhotonInfo();
         UIManager.Instance.ShowShareRoomPanel();
         OnPlayerListUpdated?.Invoke();
     }
@@ -138,6 +138,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("👤 Player Joined: " + newPlayer.NickName);
+        LogPhotonInfo();
         OnPlayerListUpdated?.Invoke();
     }
 
@@ -158,6 +159,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.LogError("Join room failed: " + message);
         OnJoinRoomFailedCallback?.Invoke(message);
     }
+
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         OnPlayerListUpdated?.Invoke();
@@ -166,5 +168,28 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarning($"❌ Disconnected from Photon: {cause}");
+    }
+
+    public void LogPhotonInfo()
+    {
+        string roomName = PhotonNetwork.CurrentRoom != null ? PhotonNetwork.CurrentRoom.Name : "NoRoom";
+        int playersCount = PhotonNetwork.CurrentRoom != null ? PhotonNetwork.CurrentRoom.PlayerCount : 0;
+        Debug.Log($"[PhotonManager.LogPhotonInfo] Room={roomName}, LocalActor={(PhotonNetwork.LocalPlayer != null ? PhotonNetwork.LocalPlayer.ActorNumber.ToString() : "NoLocalPlayer")}, Players={playersCount}");
+
+        var players = PhotonNetwork.PlayerList;
+        if (players != null)
+        {
+            foreach (var p in players)
+            {
+                Debug.Log($"[PhotonManager] Player actor {p.ActorNumber}, name:{p.NickName}");
+            }
+        }
+
+        var pviews = FindObjectsOfType<PhotonView>();
+        foreach (var pv in pviews)
+        {
+            var owner = pv.Owner != null ? pv.Owner.ActorNumber.ToString() : "null";
+            Debug.Log($"[PhotonView] id:{pv.ViewID} owner:{owner} isMine:{pv.IsMine} go:{pv.gameObject.name}");
+        }
     }
 }

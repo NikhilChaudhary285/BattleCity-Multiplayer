@@ -1,6 +1,7 @@
 public enum Scene
 {
-	MainMenu,
-	GamePlay,
-	None
+    InitScene,
+    MainMenu,
+    Gameplay,
+    None
 }
