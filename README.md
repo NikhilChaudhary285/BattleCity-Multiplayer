@@ -302,9 +302,11 @@ The project follows modular and scalable architecture practices.
 
 ## 🎥 Gameplay & Source
 
-🎥 Gameplay Video
+🎮 **Gameplay Video**  
+https://drive.google.com/file/d/1p-b62e9rE4O7p42PqA77OJCi2lgRa590/view?usp=sharing
 
-💻 GitHub Repository
+💻 **GitHub Repository**  
+https://github.com/NikhilChaudhary285/BattleCity-Multiplayer
 
 
 ------------------------------------------------------------
@@ -327,4 +329,4 @@ This project helped strengthen understanding of:
 ------------------------------------------------------------
 
 
-## ⭐ Feel free to explore this repository and connect with me. I’m always open to discussions around Unity multiplayer development, Photon networking, scalable architecture, and real-time gameplay systems.
+⭐ Feel free to explore this repository and connect with me. I’m always open to discussions around Unity multiplayer development, Photon networking, scalable architecture, and real-time gameplay systems.
