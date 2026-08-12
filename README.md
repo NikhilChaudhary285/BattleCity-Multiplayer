@@ -1,8 +1,8 @@
 # 🎮 Multiplayer Tank Battle
 
-Real-Time Multiplayer • Photon PUN • Android • iOS • WebGL • Windows • 1–4 Players
+Real-Time Multiplayer • Photon PUN2 → Photon Fusion 2.x (Migrating) • Android • iOS • WebGL • Windows • 1–4 Players
 
-A Battle City–inspired real-time multiplayer tank game built with Unity and Photon PUN, focused on scalable multiplayer architecture, synchronized gameplay systems, and clean engineering practices.
+A Battle City–inspired real-time multiplayer tank game built with Unity. Developed on Photon PUN2, with the networking layer currently being migrated to Photon Fusion 2.x for improved client-side prediction and connection handling. Focused on scalable multiplayer architecture, synchronized gameplay systems, and clean engineering practices.
 
 
 ------------------------------------------------------------
