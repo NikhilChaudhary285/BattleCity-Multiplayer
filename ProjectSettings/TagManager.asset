@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - EagleBase
+  - Water
+  - Enemy
+  - PlayerBullet
+  - EnemyBullet
+  - Brick
   layers:
   - Default
   - TransparentFX
@@ -11,15 +17,15 @@ TagManager:
   - 
   - Water
   - UI
+  - Ground
+  - Wall
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - PlayerBullet
+  - EnemyBullet
+  - EagleBase
+  - Water
   - 
   - 
   - 
@@ -40,4 +46,49 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: GroundTilemap
+    uniqueID: 3677324907
+    locked: 0
+  - name: WallTilemap
+    uniqueID: 2091427039
+    locked: 0
+  - name: GrassTilemap
+    uniqueID: 852870785
+    locked: 0
+  - name: WaterTilemap
+    uniqueID: 4208482759
+    locked: 0
+  - name: OverlayTilemap
+    uniqueID: 1911597805
+    locked: 0
+  - name: SlipperyTilemap
+    uniqueID: 1538179163
+    locked: 0
+  - name: EagleBase
+    uniqueID: 2462670637
+    locked: 0
+  - name: Player
+    uniqueID: 501835307
+    locked: 0
+  - name: Enemy
+    uniqueID: 180060407
+    locked: 0
+  - name: TankUpperPart
+    uniqueID: 2857001087
+    locked: 0
+  - name: Bullet
+    uniqueID: 2074657045
+    locked: 0
+  - name: BrickExplosion
+    uniqueID: 1312017983
+    locked: 0
+  - name: PlayerExplosion
+    uniqueID: 1899166205
+    locked: 0
+  - name: EnemyExplosion
+    uniqueID: 139527015
+    locked: 0
+  - name: EagleBaseExplosion
+    uniqueID: 3979346013
     locked: 0
